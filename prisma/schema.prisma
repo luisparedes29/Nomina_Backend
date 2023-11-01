@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id   Int    @id @default(autoincrement())
+  Name String
+  Type String
+
+  User             User[]
+  Setting          Setting[]
+  Periodicity      Periodicity[]
+  Payroll          Payroll[]
+  Payroll_Employee Payroll_Employee[]
+  Perception       Perception[]
+  Receipt          Receipt[]
+  Deductions       Deductions[]
+}
+
+model User {
+  id           Int     @id @default(autoincrement())
+  Name         String
+  Last_name    String
+  Email        String  @unique
+  Phone        String  @unique
+  Address      String
+  Password     String
+  Role         String
+  Company_name Company @relation(fields: [Company_ID], references: [id])
+  Company_ID   Int
+}
+
+model Setting {
+  id                Int     @id @default(autoincrement())
+  Name              String
+  Amount            Float
+  Description       String
+  User              Int
+  Modification_date String
+  Company_name      Company @relation(fields: [Company_ID], references: [id])
+  Company_ID        Int
+}
+
+model Periodicity {
+  id             Int      @id @default(autoincrement())
+  Name           String
+  Start_date     DateTime
+  End_date       DateTime
+  Payment_Method String
+  Payroll_name   Company  @relation(fields: [Payroll_ID], references: [id])
+  Payroll_ID     Int
+}
+
+model Payroll {
+  id                Int                @id @default(autoincrement())
+  Employee          String
+  Payment_period    DateTime
+  Gross_salary      Float
+  Total_perceptions Float
+  Total_deductions  Float
+  Net_salary        Float
+  Tax_information   String
+  State             String
+  Details           String
+  Voucher           String
+  Company_name      Company            @relation(fields: [Company_ID], references: [id])
+  Company_ID        Int
+  Payroll_Employee  Payroll_Employee[]
+  Perception        Perception[]
+  Deductions        Deductions[]
+}
+
+model Employee {
+  id               Int                @id @default(autoincrement())
+  Name             String
+  Last_name        String
+  CI               Int
+  Birthdate        DateTime
+  Gender           String
+  Address          String
+  Phone            Int
+  Email            String
+  Civil_status     String
+  Start_date       DateTime
+  Charge           String
+  Department       String
+  Base_salary      Float
+  Payroll_Employee Payroll_Employee[]
+  Receipt          Receipt[]
+  Perception       Perception[]
+  Deductions       Deductions[]
+}
+
+model Payroll_Employee {
+  id            Int      @id @default(autoincrement())
+  Employee_name Employee @relation(fields: [Employee], references: [id])
+  Employee      Int
+  Payroll_name  Payroll  @relation(fields: [Payroll_ID], references: [id])
+  Payroll_ID    Int
+  Company       Company  @relation(fields: [Company_ID], references: [id])
+  Company_ID    Int
+}
+
+model Perception {
+  id              Int      @id @default(autoincrement())
+  Name            String
+  Amount          Float
+  Tax_information String
+  Payroll_name    Payroll  @relation(fields: [Payroll_ID], references: [id])
+  Payroll_ID      Int
+  Company         Company  @relation(fields: [Company_ID], references: [id])
+  Company_ID      Int
+  Employee_name   Employee @relation(fields: [Employee_ID], references: [id])
+  Employee_ID     Int
+}
+
+model Receipt {
+  id              Int      @id @default(autoincrement())
+  Employee_name   Employee @relation(fields: [Employee], references: [id])
+  Employee        Int
+  Generation_date DateTime
+  Perception      Float
+  Deductions      Float
+  Base_salary     Float
+  Amount          Float
+  Company_name    Company  @relation(fields: [Company_ID], references: [id])
+  Company_ID      Int
+}
+
+model Deductions {
+  id              Int      @id @default(autoincrement())
+  Name            String
+  Amount          Float
+  Tax_information String
+  Payroll_name    Payroll  @relation(fields: [Payroll_ID], references: [id])
+  Payroll_ID      Int
+  Company         Company  @relation(fields: [Company_ID], references: [id])
+  Company_ID      Int
+  Employee_name   Employee @relation(fields: [Employee_ID], references: [id])
+  Employee_ID     Int
+}

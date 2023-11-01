@@ -8,6 +8,11 @@ const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
+
+const companyRouter = require('./routes/companyRoutes')
+const userRouter = require('./routes/userRoutes')
+
+
 const app = express()
 
 app.use(logger('dev'))
@@ -21,5 +26,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
+app.use('/company', companyRouter)
+app.use('/user', userRouter)
 
 module.exports = app
