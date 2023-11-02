@@ -15,13 +15,17 @@ const createEmployee = async (req, res) => {
             return res.status(400).json({ error: 'El correo electronico no es valido' });
         }
         const existingEmployee = await prisma.employee.findUnique({
-            where: { Email }
+            where: {  
+                Email
+            }
         });
 
         if (existingEmployee) {
             return res.status(400).json({ error: 'Empleado ya resgistrado' });
         }
-
+        if(Phone.toString().split('').length > 9){
+            return res.status(400).json({error: 'Teléfono invalido.' })
+        }
         const newEmployee = await prisma.employee.create({
             data: {
                 Name,
@@ -43,9 +47,7 @@ const createEmployee = async (req, res) => {
                 Deductions
             },
         });
-        let token = createToken({ id: newEmployee.id, Name: newEmployee.Name, Last_name: newEmployee.Last_name, Email: newEmployee.Email});
-        console.log(token);
-        res.status(200).json({ newEmployee: newEmployee }); // token a front.
+        res.status(200).json({ newEmployee: newEmployee });
     } catch (error) {
         console.error('Error al crear empleado:', error);
         res.status(500).json({
