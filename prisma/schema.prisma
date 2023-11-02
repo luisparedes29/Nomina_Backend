@@ -82,12 +82,12 @@ model Employee {
   id               Int                @id @default(autoincrement())
   Name             String
   Last_name        String
-  CI               Int
+  CI               Int                @unique
   Birthdate        DateTime
   Gender           String
   Address          String
-  Phone            Int
-  Email            String
+  Phone            Int                @unique
+  Email            String             @unique
   Civil_status     String
   Start_date       DateTime
   Charge           String
