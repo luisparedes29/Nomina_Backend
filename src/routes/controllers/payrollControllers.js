@@ -60,4 +60,22 @@ const getAll = async (req, res) => {
     res.json(data)
 }
 
-module.exports = { createPayroll, getAll }
+const getOne = async (req, res) => {
+    try{
+        const id = parseInt(req.params._id); // sacamos id de params (_id) y lo volvemos int
+        const payroll = await prisma.payroll.findUnique({ //Buscamos en lso payrolls (id es inherentemente unique)
+            where: {
+                id : id
+            }
+        })
+        res.status(200).json({ payroll : payroll }); // DATA
+    }catch(error) {
+        console.error('Error al buscar la nomina:', error);
+        res.status(404).json({
+            error: 'Nomina no encontrada.',
+        });
+        
+    }
+}
+
+module.exports = { createPayroll, getAll, getOne }
