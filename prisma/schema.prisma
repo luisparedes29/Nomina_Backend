@@ -59,7 +59,7 @@ model Periodicity {
   Payroll_ID     Int
 }
 
-model Payroll {
+model Payroll { 
   id                Int                @id @default(autoincrement())
   Employee          String
   Payment_period    DateTime
