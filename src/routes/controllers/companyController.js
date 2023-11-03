@@ -4,8 +4,19 @@ const prisma = new PrismaClient();
 // use `prisma` in your application to read and write data in your DB
 
 const getAllCompanies = async (req, res) => {
-  const allCompanies = await prisma.company.findMany();
-  res.json(allCompanies);
+  try {
+    const allCompanies = await prisma.company.findMany();
+    if (allCompanies.length == 0) {
+      return res.status(404).json({ error: 'No se encuentran empresas registradas' });
+    }
+    res.status(200).json({allCompanies: allCompanies})
+  } catch (error) {
+    console.error('Error al buscar empresas:', error);
+        res.status(500).json({
+            error: 'Hubo un error al buscar empresas disponibles.',
+        });
+  }
+  
 };
 
 const createCompany = async (req, res) => {
@@ -34,7 +45,7 @@ const createCompany = async (req, res) => {
         Deductions
       }
     });
-    res.status(200).json(newCompany);
+    res.status(200).json({newCompany: newCompany});
   } catch (error) {
     console.error('Error al crear empresa:', error);
         res.status(500).json({

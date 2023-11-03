@@ -56,16 +56,35 @@ const createEmployee = async (req, res) => {
 }
 
 const allEmployees = async (req, res) => {
-    const data = await prisma.Employee.findMany()
-    res.json(data)
+    try {
+        const employees = await prisma.Employee.findMany()
+        if (employees.length == 0) {
+            return res.status(404).json({ error: 'No se encuentran empleados registrados' });
+        }
+        res.status(200).json({ employees: employees });
+    }   
+    catch (error) {
+        console.error('Error al eliminar empleado:', error);
+        res.status(500).json({
+            error: 'Hubo un error al eliminar empleado.',
+        });
+    }
+
 }
 
+
 const deleteOne = async (req, res) => {
-    const id = parseInt(req.params._id);
-    const data = await prisma.employee.delete({
-        where: { id: id }
-    })
-    res.send("Eliminado empleado de id " + id)
+    try {
+        const id = parseInt(req.params._id);
+        const data = await prisma.employee.delete({
+            where: { id: id }
+        })
+        res.status(200).json({ message: "Empleado eliminado correctamente." })
+    } catch (error) {
+        
+    }
+   
+   
 }
 
 module.exports = { createEmployee, allEmployees, deleteOne };

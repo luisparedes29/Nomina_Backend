@@ -5,10 +5,14 @@ const prisma = new PrismaClient();
 const getAll = async (req, res) => {
     try {
         const perceptions = await prisma.perception.findMany()
+        console.log(perceptions.length)
+        if (perceptions.length == 0) {
+            return res.status(404).json({ error: 'No se encuentran perpecepciones registradas' });
+        }
         return res.status(200).json({ perceptions: perceptions })
     } catch (error) {
         console.log(error)
-        res.status(500).json({ error: "No se encontraron percepciones" })
+        res.status(500).json({ error: "Hubo un error al buscar percepciones" })
     }
 }
 
@@ -56,15 +60,15 @@ const createPerception = async (req, res) => {
     }
 }
 
-const deleteOne = async (req, res) =>{
+const deleteOne = async (req, res) => {
     try {
         const id = parseInt(req.params._id);
         const deletePerception = await prisma.perception.delete({
-            where : {
-                id : id
+            where: {
+                id: id
             }
-        }) 
-        res.status(200).send("Se elimino correctamente");
+        })
+        res.status(200).json({ message: "Se elimino correctamente"});
     } catch (error) {
         console.error('Error al eliminr percepción:', error);
         res.status(500).json({
@@ -73,4 +77,4 @@ const deleteOne = async (req, res) =>{
     }
 }
 
-module.exports = { getAll,  createPerception, deleteOne }
+module.exports = { getAll, createPerception, deleteOne }
