@@ -7,6 +7,6 @@ router
   .get("/all", getAllCompanies) // La protección de ruta con el chequeo del rol de "admin" está aquí solo para probar que funcione.
                                                                         // Debe borrarse lueego y proteger las rutas adecuadamente segun los roles que les correspondan
 
-  .post("/create", createCompany);
+  .post("/create-company", createCompany);
 
 module.exports = router;
