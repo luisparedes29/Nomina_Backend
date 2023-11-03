@@ -25,7 +25,7 @@ const createPayroll = async (req, res) => {
             }
         })
         if(existingPayroll){ // SI EXISTE
-            return res.status(400).json({ error: 'Payroll ya resgistrado' });
+            return res.status(400).json({ error: 'Nomina ya resgistrado' });
         }
         const newPayroll = await prisma.payroll.create({ // CREA PAYRROLL CON LA SIGUINTE DATA:
             data:{

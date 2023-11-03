@@ -9,12 +9,14 @@ const getAll = async (req, res) => {
 const createDeduction = async (req, res) => {
     try {
         const { Name, Amount, Tax_information, Payroll_name, Payroll_ID, Company, Company_ID, Employee_name, Employee_ID } = req.body // Traemos esto del req
-        if (!Name || !Amount || !Tax_information) {
+        if (!Name || !Amount || !Tax_information || !Payroll_name || !Company || !Employee_name) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const existingDeduction = await prisma.deductions.findFirst({ // comprobamos si existen dentro de la tabla otro con el mismo nombre
             where: {
-                Name
+                Name,
+                Amount,
+                Tax_information
             }
         });
 
