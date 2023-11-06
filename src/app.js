@@ -11,7 +11,10 @@ const cors = require('cors')
 
 const companyRouter = require('./routes/companyRoutes')
 const userRouter = require('./routes/userRoutes')
-
+const employeesRouter = require('./routes/employeesRoutes')
+const deductionsRouter = require("./routes/deductionsRoutes")
+const payrollRouter = require("./routes/payrollRoutes")
+const perceptionsRouter = require('./routes/perceptionsRoutes')
 
 const app = express()
 
@@ -28,5 +31,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', indexRouter)
 app.use('/company', companyRouter)
 app.use('/user', userRouter)
+app.use('/employee', employeesRouter)
+app.use('/deductions', deductionsRouter)
+app.use('/payroll', payrollRouter)
+app.use('/perception', perceptionsRouter)
+
 
 module.exports = app
