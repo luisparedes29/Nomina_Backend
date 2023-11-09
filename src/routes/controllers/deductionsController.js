@@ -8,15 +8,15 @@ const getAll = async (req, res) => {
 
 const createDeduction = async (req, res) => {
     try {
-        const { Name, Amount, Tax_information, Payroll_name, Payroll_ID, Company, Company_ID, Employee_name, Employee_ID } = req.body // Traemos esto del req
-        if (!Name || !Amount || !Tax_information || !Payroll_name || !Company || !Employee_name) {
+        const { name, amount, taxInformation, payrollID, companyID, employeeID } = req.body // Traemos esto del req. PD: Por los ID es que vamos a hacer la conexion con las otras tablas para las relaciones respectivas
+        if (!name || !amount || !taxInformation  ) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const existingDeduction = await prisma.deductions.findFirst({ // comprobamos si existen dentro de la tabla otro con el mismo nombre
             where: {
-                Name,
-                Amount,
-                Tax_information
+                name,
+                amount,
+                taxInformation
             }
         });
 
@@ -26,12 +26,9 @@ const createDeduction = async (req, res) => {
 
         const newDeduction = await prisma.deductions.create({ // crea
             data: {
-                Name,
-                Amount,
-                Tax_information,
-                Payroll_name, 
-                Company, 
-                Employee_name
+                name,
+                amount,
+                taxInformation,
             }
         });
         res.status(200).json({ newDeduction: newDeduction});

@@ -95,10 +95,10 @@ model Employee {
   phone           Int
   email           String            @unique
   civilStatus     String
-  startSate       DateTime
+  startDate       DateTime
   charge          String
   baseSalary      Float
-  departamentName Department        @relation(fields: [departmentId], references: [id])
+  departmentName Department        @relation(fields: [departmentId], references: [id])
   departmentId    String
   payrollEmployee payrollEmployee[]
   Receipt         Receipt[]

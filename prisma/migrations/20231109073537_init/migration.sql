@@ -85,7 +85,7 @@ CREATE TABLE `Employee` (
     `phone` INTEGER NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `civilStatus` VARCHAR(191) NOT NULL,
-    `startSate` DATETIME(3) NOT NULL,
+    `startDate` DATETIME(3) NOT NULL,
     `charge` VARCHAR(191) NOT NULL,
     `baseSalary` DOUBLE NOT NULL,
     `departmentId` VARCHAR(191) NOT NULL,

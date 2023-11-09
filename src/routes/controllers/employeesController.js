@@ -1,49 +1,71 @@
 const { PrismaClient } = require('@prisma/client');
 
-
 const prisma = new PrismaClient(); // instancia de prisma
 
 const createEmployee = async (req, res) => {
     try {
-        const { Name, Last_name, Start_date, Birthdate, Gender, Email, Phone, Civil_status, Address, Charge, Department, Base_salary, Payroll_Employee, Receipt, Perception, Deductions, CI } = req.body;
-        if (!Name || !Last_name || !CI || !Birthdate || !Gender || !Address || !Phone || !Email || !Civil_status || !Start_date || !Charge || !Department || !Base_salary) {
+        const {
+            name,
+            lastName,
+            startDate,
+            birthdate,
+            gender,
+            email,
+            phone,
+            civilStatus,
+            address,
+            charge,
+            baseSalary,
+            departmentId,
+            identityCard,
+        } = req.body;
+        if (
+            !name ||
+            !lastName ||
+            !identityCard ||
+            !birthdate ||
+            !gender ||
+            !address ||
+            !phone ||
+            !email ||
+            !civilStatus ||
+            !startDate ||
+            !charge ||
+            !baseSalary
+        ) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(Email)) {
+        if (!emailRegex.test(email)) {
             return res.status(400).json({ error: 'El correo electronico no es valido' });
         }
         const existingEmployee = await prisma.employee.findUnique({
             where: {
-                Email
-            }
+                email,
+            },
         });
 
         if (existingEmployee) {
             return res.status(400).json({ error: 'Empleado ya resgistrado' });
         }
-        if (Phone.toString().split('').length > 9) {
-            return res.status(400).json({ error: 'Teléfono invalido.' })
+        if (phone.toString().split('').length > 9) {
+            return res.status(400).json({ error: 'Teléfono invalido.' });
         }
         const newEmployee = await prisma.employee.create({
             data: {
-                Name,
-                Last_name,
-                CI,
-                Birthdate,
-                Gender,
-                Address,
-                Phone,
-                Email,
-                Civil_status,
-                Start_date,
-                Charge,
-                Department,
-                Base_salary,
-                Payroll_Employee,
-                Receipt,
-                Perception,
-                Deductions
+                name,
+                lastName,
+                identityCard,
+                birthdate,
+                gender,
+                address,
+                phone,
+                email,
+                civilStatus,
+                startDate,
+                charge,
+                baseSalary,
+                departmentId
             },
         });
         res.status(200).json({ newEmployee: newEmployee });
@@ -53,38 +75,83 @@ const createEmployee = async (req, res) => {
             error: 'Hubo un error al crear empleado.',
         });
     }
-}
+};
 
 const allEmployees = async (req, res) => {
     try {
-        const employees = await prisma.Employee.findMany()
+        const employees = await prisma.Employee.findMany();
         if (employees.length == 0) {
             return res.status(404).json({ error: 'No se encuentran empleados registrados' });
         }
         res.status(200).json({ employees: employees });
-    }   
-    catch (error) {
+    } catch (error) {
         console.error('Error al eliminar empleado:', error);
         res.status(500).json({
             error: 'Hubo un error al eliminar empleado.',
         });
     }
+};
 
-}
-
-
-const deleteOne = async (req, res) => {
+const getEmployeeById = async (req, res) => {
     try {
-        const id = parseInt(req.params._id);
-        const data = await prisma.employee.delete({
-            where: { id: id }
-        })
-        res.status(200).json({ message: "Empleado eliminado correctamente." })
+        console.log(req.params.id);
+        const employee = await prisma.employee.findUnique({
+            where: {
+                id: req.params.id,
+            },
+        });
+        if (!employee) {
+            return res.status(404).json({ error: 'La empresa no existe' });
+        }
+        res.status(200).json({
+            employee: employee,
+        });
     } catch (error) {
-        
+        console.error(error.message);
+        res.status(500).send('Error al buscar el empleado');
     }
-   
-   
+};
+
+const editEmployee = async (req, res) => {
+    try {
+        const employee = await prisma.employee.update({
+            where: {
+                id: req.params.id,
+            },
+            data: {
+                name: req.body.name,
+                lastName: req.body.lastName,
+                identityCard: req.body.identityCard,
+                birthdate: req.body.birthdate,
+                gender: req.body.gender,
+                address: req.body.address,
+                phone: req.body.phone,
+                email: req.body.email,
+                civilStatus: req.body.civilStatus,
+                startDate: req.body.startDate,
+                charge: req.body.charge,
+                baseSalary: req.body.baseSalary
+            },
+        });
+        res.status(200).json({ message: 'Se ha actualizado la información del empleado exitosamente' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Se ha producido un error al intentar actualizar la información del empleado');
+    }
 }
 
-module.exports = { createEmployee, allEmployees, deleteOne };
+const deleteEmployee = async (req, res) => {
+    try {
+        const employee = await prisma.employee.delete({
+            where: {
+                id: req.params.id,
+            },
+        });
+        res.status(200).json({ message: 'Se ha borrado al empleado exitosamente' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Se ha producido un error al intentar borrar al empleado');
+    }
+};
+
+module.exports = { createEmployee, allEmployees,getEmployeeById, editEmployee, deleteEmployee };
