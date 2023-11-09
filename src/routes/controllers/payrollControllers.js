@@ -54,7 +54,7 @@ const getAll = async (req, res) => {
 
 const getOne = async (req, res) => {
   try {
-    const id = parseInt(req.params._id) // sacamos id de params (_id) y lo volvemos int
+    const id = req.params._id // sacamos id de params (_id) y lo volvemos int
     const payroll = await prisma.payroll.findUnique({
       //Buscamos en lso payrolls (id es inherentemente unique)
       where: {
