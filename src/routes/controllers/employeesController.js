@@ -112,7 +112,7 @@ const getEmployeeById = async (req, res) => {
       },
     })
     if (!employee) {
-      return res.status(404).json({ error: 'La empresa no existe' })
+      return res.status(404).json({ error: 'El empleado no existe' })
     }
     res.status(200).json({
       employee: employee,
