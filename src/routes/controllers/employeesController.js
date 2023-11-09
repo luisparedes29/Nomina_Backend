@@ -5,45 +5,45 @@ const prisma = new PrismaClient(); // instancia de prisma
 
 const createEmployee = async (req, res) => {
     try {
-        const { Name, Last_name, Start_date, Birthdate, Gender, Email, Phone, Civil_status, Address, Charge, Department, Base_salary, Payroll_Employee, Receipt, Perception, Deductions, CI } = req.body;
-        if (!Name || !Last_name || !CI || !Birthdate || !Gender || !Address || !Phone || !Email || !Civil_status || !Start_date || !Charge || !Department || !Base_salary) {
+        const { name, lastName, startDate, birthdate, gender, email, phone, civilStatus, address, charge, department, baseSalary, payrollEmployee, receipt, perception, deduction, identityCard } = req.body;
+        if (!name || !lastName || !identityCard || !birthdate || !gender || !address || !phone || !email || !civilStatus || !Start_date || !charge || !department || !baseSalary) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(Email)) {
+        if (!emailRegex.test(email)) {
             return res.status(400).json({ error: 'El correo electronico no es valido' });
         }
         const existingEmployee = await prisma.employee.findUnique({
             where: {
-                Email
+                email
             }
         });
 
         if (existingEmployee) {
             return res.status(400).json({ error: 'Empleado ya resgistrado' });
         }
-        if (Phone.toString().split('').length > 9) {
+        if (phone.toString().split('').length > 9) {
             return res.status(400).json({ error: 'Teléfono invalido.' })
         }
         const newEmployee = await prisma.employee.create({
             data: {
-                Name,
-                Last_name,
-                CI,
-                Birthdate,
-                Gender,
-                Address,
-                Phone,
-                Email,
-                Civil_status,
-                Start_date,
-                Charge,
-                Department,
-                Base_salary,
-                Payroll_Employee,
-                Receipt,
-                Perception,
-                Deductions
+                name,
+                lastName,
+                identityCard,
+                birthdate,
+                gender,
+                address,
+                phone,
+                email,
+                civilStatus,
+                startDate,
+                charge,
+                department,
+                baseSalary,
+                payrollEmployee,
+                receipt,
+                perception,
+                deduction
             },
         });
         res.status(200).json({ newEmployee: newEmployee });

@@ -19,23 +19,20 @@ const getAll = async (req, res) => {
 const createPerception = async (req, res) => {
     try {
         const {
-            Name,
-            Amount,
-            Tax_information,
-            Payroll_name,
-            Payroll_ID,
-            Company,
-            Company_ID,
-            Employee_name,
-            Employee_ID } = req.body;
-        if (!Name || !Amount || !Tax_information || !Payroll_name || !Company || !Employee_name) {
+            name,
+            amount,
+            taxInformation,
+            payrollID,
+            companyID,
+            employeeID } = req.body;
+        if (!name || !amount || !taxInformation || !payrollName) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const existingPerception = await prisma.perception.findFirst({
             where: {
-                Name,
-                Amount,
-                Tax_information
+                name,
+                amount,
+                taxInformation
             }
         })
         if (existingPerception) {
@@ -43,12 +40,9 @@ const createPerception = async (req, res) => {
         }
         const newPerception = await prisma.perception.create({
             data: {
-                Name,
-                Amount,
-                Tax_information,
-                Payroll_name,
-                Company,
-                Employee_name
+                name,
+                amount,
+                taxInformation,
             }
         })
         res.status(200).json({ newPerception: newPerception });
