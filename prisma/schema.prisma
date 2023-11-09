@@ -23,6 +23,7 @@ model Company {
   Receipt          Receipt[]
   Deductions       Deductions[]
   Department       Department[]
+  Employee         Employee[]
 }
 
 model User {
@@ -98,8 +99,10 @@ model Employee {
   startDate       DateTime
   charge          String
   baseSalary      Float
-  departmentName Department        @relation(fields: [departmentId], references: [id])
+  departmentName  Department        @relation(fields: [departmentId], references: [id])
   departmentId    String
+  companyName     Company           @relation(fields: [companyId], references: [id])
+  companyId       String
   payrollEmployee payrollEmployee[]
   Receipt         Receipt[]
   Perception      Perception[]
