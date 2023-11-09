@@ -11,139 +11,146 @@ datasource db {
 }
 
 model Company {
-  id   Int    @id @default(autoincrement())
-  Name String
-  Type String
+  id   String @id @default(uuid())
+  name String
+  type String
 
   User             User[]
   Setting          Setting[]
-  Periodicity      Periodicity[]
   Payroll          Payroll[]
-  Payroll_Employee Payroll_Employee[]
+  Payroll_Employee payrollEmployee[]
   Perception       Perception[]
   Receipt          Receipt[]
   Deductions       Deductions[]
+  Department       Department[]
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
-  Name         String
-  Last_name    String
-  Email        String  @unique
-  Phone        String  @unique
-  Address      String
-  Password     String
-  Role         String
-  Company_name Company @relation(fields: [Company_ID], references: [id])
-  Company_ID   Int
+  id          String  @id @default(uuid())
+  name        String
+  lastName    String
+  email       String  @unique
+  phone       String  @unique
+  address     String
+  password    String
+  role        String
+  companyName Company @relation(fields: [companyId], references: [id])
+  companyId   String
 }
 
 model Setting {
-  id                Int     @id @default(autoincrement())
-  Name              String
-  Amount            Float
-  Description       String
-  User              Int
-  Modification_date String
-  Company_name      Company @relation(fields: [Company_ID], references: [id])
-  Company_ID        Int
+  id          String  @id @default(uuid())
+  name        String
+  amount      Float
+  description String
+  companyName Company @relation(fields: [companyId], references: [id])
+  companyId   String
+}
+
+model Department {
+  id          String     @id @default(uuid())
+  name        String
+  companyName Company    @relation(fields: [companyId], references: [id])
+  companyId   String
+  Employee    Employee[]
 }
 
 model Periodicity {
-  id             Int      @id @default(autoincrement())
-  Name           String
-  Start_date     DateTime
-  End_date       DateTime
-  Payment_Method String
-  Payroll_name   Company  @relation(fields: [Payroll_ID], references: [id])
-  Payroll_ID     Int
+  id            String   @id @default(uuid())
+  name          String
+  startDate     DateTime
+  endDate       DateTime
+  paymentMethod String
+  payrollName   Payroll  @relation(fields: [payrollId], references: [id])
+  payrollId     String
 }
 
-model Payroll { 
-  id                Int                @id @default(autoincrement())
-  Employee          String
-  Payment_period    DateTime
-  Gross_salary      Float
-  Total_perceptions Float
-  Total_deductions  Float
-  Net_salary        Float
-  Tax_information   String
-  State             String
-  Details           String
-  Voucher           String
-  Company_name      Company            @relation(fields: [Company_ID], references: [id])
-  Company_ID        Int
-  Payroll_Employee  Payroll_Employee[]
-  Perception        Perception[]
-  Deductions        Deductions[]
+model Payroll {
+  id               String            @id @default(uuid())
+  employee         String?
+  grossSalary      Float
+  totalPerceptions Float
+  totalDeductions  Float
+  netSalary        Float
+  taxInformation   String
+  state            String
+  details          String
+  voucher          String
+  companyName      Company           @relation(fields: [companyId], references: [id])
+  companyId        String
+  Payroll_Employee payrollEmployee[]
+  Perception       Perception[]
+  Deductions       Deductions[]
+  Periodicity      Periodicity[]
 }
 
 model Employee {
-  id               Int                @id @default(autoincrement())
-  Name             String
-  Last_name        String
-  CI               Int               
-  Birthdate        DateTime
-  Gender           String
-  Address          String
-  Phone            Int              
-  Email            String             @unique
-  Civil_status     String
-  Start_date       DateTime
-  Charge           String
-  Department       String
-  Base_salary      Float
-  Payroll_Employee Payroll_Employee[]
-  Receipt          Receipt[]
-  Perception       Perception[]
-  Deductions       Deductions[]
+  id              String            @id @default(uuid())
+  name            String
+  lastName        String
+  identityCard    Int
+  birthdate       DateTime
+  gender          String
+  address         String
+  phone           Int
+  email           String            @unique
+  civilStatus     String
+  startSate       DateTime
+  charge          String
+  baseSalary      Float
+  departamentName Department        @relation(fields: [departmentId], references: [id])
+  departmentId    String
+  payrollEmployee payrollEmployee[]
+  Receipt         Receipt[]
+  Perception      Perception[]
+  Deductions      Deductions[]
 }
 
-model Payroll_Employee {
-  id            Int      @id @default(autoincrement())
-  Employee_name Employee @relation(fields: [Employee], references: [id])
-  Employee      Int
-  Payroll_name  Payroll  @relation(fields: [Payroll_ID], references: [id])
-  Payroll_ID    Int
-  Company       Company  @relation(fields: [Company_ID], references: [id])
-  Company_ID    Int
+model payrollEmployee {
+  id           String   @id @default(uuid())
+  employeeName Employee @relation(fields: [employeeId], references: [id])
+  employeeId   String
+  payrollName  Payroll  @relation(fields: [payrollId], references: [id])
+  payrollId    String
+  companyName  Company  @relation(fields: [companyId], references: [id])
+  companyId    String
 }
 
 model Perception {
-  id              Int      @id @default(autoincrement())
-  Name            String
-  Amount          Float
-  Tax_information String
-  Payroll_name    Payroll  @relation(fields: [Payroll_ID], references: [id])
-  Payroll_ID      Int
-  Company         Company  @relation(fields: [Company_ID], references: [id])
-  Company_ID      Int
-  Employee_name   Employee @relation(fields: [Employee_ID], references: [id])
-  Employee_ID     Int
+  id             String   @id @default(uuid())
+  name           String
+  amount         Float
+  taxInformation String
+  payrollName    Payroll  @relation(fields: [payrollId], references: [id])
+  payrollId      String
+  company        Company  @relation(fields: [companyId], references: [id])
+  companyId      String
+  Employee_name  Employee @relation(fields: [employeeId], references: [id])
+  employeeId     String
 }
 
 model Receipt {
-  id              Int      @id @default(autoincrement())
-  Employee_name   Employee @relation(fields: [Employee], references: [id])
-  Employee        Int
-  Generation_date DateTime
-  Perception      Float
-  Deductions      Float
-  Base_salary     Float
-  Amount          Float
-  Company_name    Company  @relation(fields: [Company_ID], references: [id])
-  Company_ID      Int
+  id             String   @id @default(uuid())
+  employeeName   Employee @relation(fields: [employeeId], references: [id])
+  employeeId     String
+  generationDate DateTime
+  perception     Float
+  deductions     Float
+  baseSalary     Float
+  amount         Float
+  companyName    Company  @relation(fields: [companyId], references: [id])
+  companyId      String
 }
 
 model Deductions {
-  id              Int      @id @default(autoincrement())
-  Name            String
-  Amount          Float
-  Tax_information String
-  Payroll_name    Payroll  @relation(fields: [Payroll_ID], references: [id])
-  Payroll_ID      Int
-  Company         Company  @relation(fields: [Company_ID], references: [id])
-  Company_ID      Int
-  Employee_name   Employee @relation(fields: [Employee_ID], references: [id])
-  Employee_ID     Int
+  id             String   @id @default(uuid())
+  name           String
+  amount         Float
+  taxInformation String
+  payrollName    Payroll  @relation(fields: [payrollId], references: [id])
+  payrollId      String
+  company        Company  @relation(fields: [companyId], references: [id])
+  companyId      String
+  employeeName   Employee @relation(fields: [employeeId], references: [id])
+  employeeId     String
 }
