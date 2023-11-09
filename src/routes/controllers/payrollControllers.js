@@ -4,23 +4,23 @@ const prisma = new PrismaClient(); // instancia de prisma
 
 const createPayroll = async (req, res) => {
     try {
-        const { Employee, Payment_period, Gross_salary, Total_perceptions, Total_deductions, Net_salary, Tax_information, State, Details, Voucher, Company_name, Company_ID, Payroll_Employee, Perception, Deductions } = req.body // DATA
-        if (!Employee || !Payment_period || !Gross_salary || !Total_perceptions || !Total_deductions || !Net_salary || !Tax_information || !State || !Details || !Voucher || !Company_name) { // COMPROBAMOS DATA
+        const { employee, paymentPeriod, grossSalary, totalPerceptions, totalDeductions, netSalary, taxInformation, state, details, voucher, companyID, payrollEmployee, perception, deductions } = req.body // DATA
+        if (!employee || !paymentPeriod || !grossSalary || !totalPerceptions || !totalDeductions || !netSalary || !taxInformation || !state || !details || !voucher || !Company_name) { // COMPROBAMOS DATA
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const existingPayroll = await prisma.payroll.findFirst({ // ENCUENTRA SIMILAR
             where: {
 
-                Employee,
-                Payment_period,
-                Gross_salary,
-                Total_perceptions,
-                Total_deductions,
-                Net_salary,
-                Tax_information,
-                State,
-                Details,
-                Voucher
+                employee,
+                paymentPeriod,
+                grossSalary,
+                totalPerceptions,
+                totalDeductions,
+                netSalary,
+                taxInformation,
+                state,
+                details,
+                voucher
 
             }
         })
@@ -29,21 +29,20 @@ const createPayroll = async (req, res) => {
         }
         const newPayroll = await prisma.payroll.create({ // CREA PAYRROLL CON LA SIGUINTE DATA:
             data: {
-                Employee,
-                Payment_period,
-                Gross_salary,
-                Total_perceptions,
-                Total_deductions,
-                Net_salary,
-                Tax_information,
-                State,
-                Details,
-                Voucher,
-                Company_name,
-                Company_ID,
-                Payroll_Employee,
-                Perception,
-                Deductions
+                employee,
+                paymentPeriod,
+                grossSalary,
+                totalPerceptions,
+                totalDeductions,
+                netSalary,
+                taxInformation,
+                state,
+                details,
+                voucher,
+                companyID,
+                payrollEmployee,
+                perception,
+                deductions
             }
         })
         res.status(200).json({ newPayroll: newPayroll });
