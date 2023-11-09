@@ -20,7 +20,6 @@ const getAllCompanies = async (req, res) => {
 
 const getCompanyById = async (req, res) => {
     try {
-        console.log(req.params.id);
         const company = await prisma.company.findUnique({
             where: {
                 id: req.params.id,

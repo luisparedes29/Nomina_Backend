@@ -9,7 +9,6 @@ const registerUser = async (req, res) => {
     try {
         const { name, lastName, email, phone, address, password, role, companyId } = req.body;
         if (!name || !lastName || !email || !phone || !address || !password || !role || !companyId) {
-            console.log(req.body);
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,7 +40,6 @@ const registerUser = async (req, res) => {
             },
         });
         let token = createToken({ id: newUser.id, Name: newUser.Name, Last_name: newUser.Last_name, Email: newUser.Email, role: newUser.Role });
-        console.log(token);
         res.status(200).json({ message: 'Usuario creado exitosamente'}); 
     } catch (error) {
         console.error('Error al registrar el usuario:', error);
@@ -68,7 +66,6 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ error: 'La contraseña es incorrecta' });
         }
         let token = createToken ({ id: user.id, Name: user.Name, Last_name: user.Last_name, Email: user.Email, role: user.Role });
-        console.log(token)
         res.status(200).json({ userInfo: user }); // Por aca se pasará el token al front cuando se conecte
     } catch (error) {
         console.error('Error al registrar el usuario:', error);
