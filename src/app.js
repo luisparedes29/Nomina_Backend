@@ -8,14 +8,15 @@ const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
-
 const companyRouter = require('./routes/companyRoutes')
 const userRouter = require('./routes/userRoutes')
 const employeesRouter = require('./routes/employeesRoutes')
-const deductionsRouter = require("./routes/deductionsRoutes")
-const payrollRouter = require("./routes/payrollRoutes")
+const deductionsRouter = require('./routes/deductionsRoutes')
+const payrollRouter = require('./routes/payrollRoutes')
 const perceptionsRouter = require('./routes/perceptionsRoutes')
 const departmentRouter = require('./routes/departmentRoutes')
+const { createSuperUser } = require('./helpers/superUsers')
+createSuperUser()
 
 const app = express()
 
@@ -37,6 +38,5 @@ app.use('/deductions', deductionsRouter)
 app.use('/payroll', payrollRouter)
 app.use('/perception', perceptionsRouter)
 app.use('/department', departmentRouter)
-
 
 module.exports = app
