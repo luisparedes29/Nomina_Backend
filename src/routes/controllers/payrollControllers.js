@@ -6,11 +6,18 @@ const createPayroll = async (req, res) => {
   try {
     //recibimos por parametro el ID del departamento y compañia
     const { departmentId, companyId } = req.params
-    //Buscamos todos los empleados que coincidan con esos valores
+    //Buscamos todos los empleados que coincidan con esos valores USANDO EL AND
+
     const employees = await prisma.employee.findMany({
       where: {
-        departmentId: departmentId,
-        companyId: companyId,
+        AND: [
+          {
+            departmentId: departmentId,
+          },
+          {
+            companyId: companyId,
+          },
+        ],
       },
     })
     if (employees.length == 0) {
