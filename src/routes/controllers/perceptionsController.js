@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 const getAll = async (req, res) => {
     try {
         const perceptions = await prisma.perception.findMany()
-        console.log(perceptions.length)
         if (perceptions.length == 0) {
             return res.status(404).json({ error: 'No se encuentran perpecepciones registradas' });
         }
