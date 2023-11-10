@@ -33,10 +33,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', indexRouter)
 app.use('/company', companyRouter)
 app.use('/user', userRouter)
+app.use('/department', departmentRouter)
 app.use('/employee', employeesRouter)
 app.use('/deductions', deductionsRouter)
 app.use('/payroll', payrollRouter)
 app.use('/perception', perceptionsRouter)
-app.use('/department', departmentRouter)
 
 module.exports = app

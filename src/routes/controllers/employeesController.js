@@ -57,7 +57,7 @@ const createEmployee = async (req, res) => {
       return res.status(400).json({ error: 'Empleado ya resgistrado' })
     }
     if (phone.toString().split('').length > 9) {
-      return res.status(400).json({ error: 'Teléfono invalido.' })
+      return res.status(400).json({ error: phone.toString().split('').length })
     }
     const newEmployee = await prisma.employee.create({
       data: {
@@ -96,9 +96,9 @@ const allEmployees = async (req, res) => {
     }
     res.status(200).json({ employees: employees })
   } catch (error) {
-    console.error('Error al eliminar empleado:', error)
+    console.error('Error al encontrar empleados:', error)
     res.status(500).json({
-      error: 'Hubo un error al eliminar empleado.',
+      error: 'Hubo un error al encontrar los empleados.',
     })
   }
 }
@@ -125,23 +125,79 @@ const getEmployeeById = async (req, res) => {
 
 const editEmployee = async (req, res) => {
   try {
-    const employee = await prisma.employee.update({
+    const {
+      name,
+      lastName,
+      startDate,
+      birthdate,
+      gender,
+      email,
+      phone,
+      civilStatus,
+      address,
+      charge,
+      baseSalary,
+      identityCard,
+    } = req.body
+    if (
+      !name ||
+      !lastName ||
+      !identityCard ||
+      !birthdate ||
+      !gender ||
+      !address ||
+      !phone ||
+      !email ||
+      !civilStatus ||
+      !startDate ||
+      !charge ||
+      !baseSalary
+    ) {
+      return res.status(400).json({
+        error:
+          'Es necesario rellenar todos los campos para poder avanzar con el registro',
+      })
+    }
+    // *Validacion de empleado existente*
+    const existingEmployee = await prisma.employee.findUnique({
+      where: {
+        email,
+      },
+    })
+
+    if (!existingEmployee) {
+      return res.status(400).json({ error: 'Empleado no encontrado' })
+    }
+
+    // *Validacion de campos*
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return res
+        .status(400)
+        .json({ error: 'El correo electronico no es valido' })
+    }
+
+    if (phone.toString().split('').length > 9) {
+      return res.status(400).json({ error: phone.toString().split('').length })
+    }
+
+    await prisma.employee.update({
       where: {
         id: req.params.id,
       },
       data: {
-        name: req.body.name,
-        lastName: req.body.lastName,
-        identityCard: req.body.identityCard,
-        birthdate: req.body.birthdate,
-        gender: req.body.gender,
-        address: req.body.address,
-        phone: req.body.phone,
-        email: req.body.email,
-        civilStatus: req.body.civilStatus,
-        startDate: req.body.startDate,
-        charge: req.body.charge,
-        baseSalary: req.body.baseSalary,
+        name,
+        lastName,
+        identityCard,
+        birthdate: new Date(birthdate),
+        gender,
+        address,
+        phone,
+        email,
+        civilStatus,
+        startDate: new Date(startDate),
+        charge,
+        baseSalary,
       },
     })
     res.status(200).json({

@@ -9,6 +9,7 @@ router
 
   .get("/find-company/:id", getCompanyById)
 
+  // TODO: add a middleware here.
   .post("/create-company", createCompany);
 
 module.exports = router;
