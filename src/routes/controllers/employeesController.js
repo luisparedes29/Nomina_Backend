@@ -105,7 +105,6 @@ const allEmployees = async (req, res) => {
 
 const getEmployeeById = async (req, res) => {
   try {
-    console.log(req.params.id)
     const employee = await prisma.employee.findUnique({
       where: {
         id: req.params.id,
