@@ -1,0 +1,740 @@
+{
+	"info": {
+		"_postman_id": "8303d630-1e11-4f63-b356-c8288ffdb150",
+		"name": "Nomina",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27472495"
+	},
+	"item": [
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "Nomina - All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/company/all",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"company",
+								"all"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Find Company",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/company/find-company/b62993b8-14db-4fd0-8ef0-7ce0ace207db",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"company",
+								"find-company",
+								"b62993b8-14db-4fd0-8ef0-7ce0ace207db"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Create Company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"X.com\",\n    \"type\": \"evil-company\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/company/create-company",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"company",
+								"create-company"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Nomina - All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/all",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"all"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - All Company",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/all-company/b62993b8-14db-4fd0-8ef0-7ce0ace207db",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"all-company",
+								"b62993b8-14db-4fd0-8ef0-7ce0ace207db"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Evil\",\n    \"lastName\": \"Morty\",\n    \"email\": \"evil-morty@gmail.com\",\n    \"phone\": \"+58424444444\",\n    \"address\": \"Evil Street\",\n    \"password\": \"123456Uwu\",\n    \"role\": \"superAdmin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/signup/b62993b8-14db-4fd0-8ef0-7ce0ace207db",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"signup",
+								"b62993b8-14db-4fd0-8ef0-7ce0ace207db"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"evil-morty@gmail.com\",\n    \"password\": \"123456Uwu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/user/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "Nomina - All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/department/all",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"department",
+								"all"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Create Department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"evil-department\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/department/create-department/5d17135c-43bb-40e8-9444-788e7562d275",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"department",
+								"create-department",
+								"5d17135c-43bb-40e8-9444-788e7562d275"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Edit Department",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"non-evil-department\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/department/edit-department/64a2fd4e-e629-4bb8-b050-e1bd9f0d0425",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"department",
+								"edit-department",
+								"64a2fd4e-e629-4bb8-b050-e1bd9f0d0425"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Delete Department",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"non-evil-department\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/department/delete-department/64a2fd4e-e629-4bb8-b050-e1bd9f0d0425",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"department",
+								"delete-department",
+								"64a2fd4e-e629-4bb8-b050-e1bd9f0d0425"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Nomina - All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee/all",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"all"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Find Employee",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee/find-employee/769eb22e-36cc-4b99-b88f-1d7bd3839548",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"find-employee",
+								"769eb22e-36cc-4b99-b88f-1d7bd3839548"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Create Employee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Evil\",\n    \"lastName\": \"Morty\",\n    \"startDate\": \"01/01/2010\",\n    \"birthdate\": \"01/01/1980\",\n    \"gender\": \"Male\",\n    \"email\": \"evil-mort-copy@gmail.com\",\n    \"phone\": 424444444,\n    \"civilStatus\": \"Single\",\n    \"charge\": \"CEO\",\n    \"baseSalary\": 1.000000000,\n    \"address\": \"Evil Street\",\n    \"identityCard\": 12123123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee/create-employee/5d17135c-43bb-40e8-9444-788e7562d275/b308cccd-b098-4d42-a7d2-1cb0ea7dfa7a",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"create-employee",
+								"5d17135c-43bb-40e8-9444-788e7562d275",
+								"b308cccd-b098-4d42-a7d2-1cb0ea7dfa7a"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Edit Employee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Evil\",\n    \"lastName\": \"Morty\",\n    \"startDate\": \"01/01/2010\",\n    \"birthdate\": \"01/01/1980\",\n    \"gender\": \"Male\",\n    \"email\": \"evil-mort-copy@gmail.com\",\n    \"phone\": 424444444,\n    \"civilStatus\": \"Single\",\n    \"charge\": \"CEO\",\n    \"baseSalary\": 1.000000000,\n    \"address\": \"Evil Street\",\n    \"identityCard\": 12123123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee/edit-employee/769eb22e-36cc-4b99-b88f-1d7bd3839548",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"edit-employee",
+								"769eb22e-36cc-4b99-b88f-1d7bd3839548"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Delete Employee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"non-evil-department\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/employee/delete-employee/769eb22e-36cc-4b99-b88f-1d7bd3839548",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"employee",
+								"delete-employee",
+								"769eb22e-36cc-4b99-b88f-1d7bd3839548"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payroll",
+			"item": [
+				{
+					"name": "Nomina - All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/payroll/all",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"payroll",
+								"all"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Find",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/payroll/:id",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"payroll",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "xxxxx"
+								}
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Create Payroll",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Evil\",\n    \"lastName\": \"Morty\",\n    \"startDate\": \"01/01/2010\",\n    \"birthdate\": \"01/01/1980\",\n    \"gender\": \"Male\",\n    \"email\": \"evil-mort-copy@gmail.com\",\n    \"phone\": 424444444,\n    \"civilStatus\": \"Single\",\n    \"charge\": \"CEO\",\n    \"baseSalary\": 1.000000000,\n    \"address\": \"Evil Street\",\n    \"identityCard\": 12123123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/payroll/create-payroll/5d17135c-43bb-40e8-9444-788e7562d275/b308cccd-b098-4d42-a7d2-1cb0ea7dfa7a",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"payroll",
+								"create-payroll",
+								"5d17135c-43bb-40e8-9444-788e7562d275",
+								"b308cccd-b098-4d42-a7d2-1cb0ea7dfa7a"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Perception",
+			"item": [
+				{
+					"name": "Nomina - All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/perception/all",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"perception",
+								"all"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Find",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tokenToSend\": \"iUSD\",\n    \"amountToSend\": 5,\n    \"tokenToReceive\": \"MNT\",\n    \"amountToReceive\": 10,\n    \"gasFee\": 1000000,\n    \"userAddress\": \"addr_test1vzysmlrc6jpuektcyy0pqhe9c6dyrukc0yyj35qfq7q9pqskkha4x\",\n    \"multisigAddress\": \"addr_test1xpqccfkm5279mleucmc75aaps3q5pk4fpfcqf6uym23wfygduwh9wt4a6303mpjv42spayd7crtdlcagf8nwk85aehds02g5t4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/payroll/:id",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"payroll",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "xxxxx"
+								}
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				},
+				{
+					"name": "Nomina - Create Perception",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Evil\",\n    \"amount\": 1000000000,\n    \"taxInformation\": \"Im not washing money, look at another place o w o\",\n    \"payrollName\": \"something is missing here :(\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/perception/create-perception",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"perception",
+								"create-perception"
+							]
+						},
+						"description": "Endpoint to edit user profile by UID.\n\nCharacteristics:\n\n- Requires Session.\n- Return Boolean True if success.\n    \n\nVariations:\n\n- Users with token account:profile and privilege update:admin can update and change all profiles excluding superadmins.\n- Users with token all and privilege superadmin can update and change all profiles.\n    \n\nErrors 400 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| VPU0001A  <br>UIDUser | Must be a String |\n| VPU0001B  <br>UIDUser | Must not exceed 36 characters |\n| VPU0001C  <br>UIDUser | You can't edit this account |\n| VPU0001D  <br>UIDUser | User do not exists |\n| VPU0001E  <br>UIDUser | User is disabled |\n| VPU0002A  <br>FullNameUser | Must be a String |\n| VPU0002B  <br>FullNameUser | Must not exceed 100 characters |\n| VPU0003A  <br>SecondaryEmailUser | Must be a valid email |\n| VPU0004A  <br>MobileNumberUser | Must be a valid number phone |\n| VPU0005A  <br>PhoneNumberUser | Must be a valid number phone |\n| VPU0006A  <br>WhatsappUser | Must be a valid number phone |\n| VPU0007A  <br>BiographyUser | Must be a String |\n| VPU0007B  <br>BiographyUser | Must not exceed 255 characters |\n| VPU0008A  <br>FullAddressUser | Must be a String |\n| VPU0008B  <br>FullAddressUser | Must not exceed 255 characters |\n| VPU0009A  <br>Locations | Locations must be an array |\n| VPU0009B  <br>Locations | Locations not found |\n\nErrors 403 (Array):\n\n| **Code/Variable** | **Message** |\n| --- | --- |\n| PSV0001A | Required Token |\n| PSV0002A | Required Privilege |\n\nErrors 500 (JSON):\n\n| **Code** | **Message** |\n| --- | --- |\n| IEC0001A <br>ISE0001A   <br>IVC0001A  <br>ISV0001A  <br>IAU0001B | An internal server error has occurred. Please try again later. |"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "localhost:3000"
+		}
+	]
+}
