@@ -6,12 +6,27 @@ const {
   getAllUsers,
   getAllUsersOfCompany,
 } = require('./controllers/userController')
+const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
-  .get('/all', getAllUsers)
-  .get('/all-company/:id', getAllUsersOfCompany)
-  .post('/signup/:id', registerUser)
+  .get(
+    '/all',
+    validateToken,
+    getAllUsers,
+   )
+  .get(
+    '/all-company/:id',
+    validateToken,
+    getAllUsersOfCompany
+   )
+  .post(
+    '/signup/:id',
+    registerUser
+   )
 
-  .post('/login', loginUser)
+  .post(
+    '/login',
+    loginUser
+   )
 
 module.exports = router
