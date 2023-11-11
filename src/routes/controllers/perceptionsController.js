@@ -16,6 +16,7 @@ const getAll = async (req, res) => {
 }
 
 const createPerception = async (req, res) => {
+    // TODO: fix this after fix the create payroll endpoint.
     try {
         const {
             name,
