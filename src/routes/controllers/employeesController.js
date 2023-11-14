@@ -57,7 +57,7 @@ const createEmployee = async (req, res) => {
       return res.status(400).json({ error: 'Empleado ya resgistrado' })
     }
     if (phone.toString().split('').length > 9) {
-      return res.status(400).json({ error: phone.toString().split('').length })
+      return res.status(400).json({ error: 'Teléfono invalido.' })
     }
     const newEmployee = await prisma.employee.create({
       data: {
@@ -125,42 +125,17 @@ const getEmployeeById = async (req, res) => {
 const editEmployee = async (req, res) => {
   try {
     const {
-      name,
-      lastName,
-      startDate,
-      birthdate,
-      gender,
       email,
       phone,
-      civilStatus,
-      address,
-      charge,
+      birthdate,
+      startDate,
       baseSalary,
-      identityCard,
+      identityCard
     } = req.body
-    if (
-      !name ||
-      !lastName ||
-      !identityCard ||
-      !birthdate ||
-      !gender ||
-      !address ||
-      !phone ||
-      !email ||
-      !civilStatus ||
-      !startDate ||
-      !charge ||
-      !baseSalary
-    ) {
-      return res.status(400).json({
-        error:
-          'Es necesario rellenar todos los campos para poder avanzar con el registro',
-      })
-    }
     // *Validacion de empleado existente*
     const existingEmployee = await prisma.employee.findUnique({
       where: {
-        email,
+        id: req.params.id
       },
     })
 
@@ -168,36 +143,44 @@ const editEmployee = async (req, res) => {
       return res.status(400).json({ error: 'Empleado no encontrado' })
     }
 
+    console.log('existingEmployee: ', existingEmployee);
+
+    if (baseSalary && typeof baseSalary !== "number") {
+      return res
+        .status(400)
+        .json({ error: 'El salario base se recibió en un formato que no es valido' })
+    }
+
+    if (identityCard && typeof identityCard !== "number") {
+      return res
+        .status(400)
+        .json({ error: 'El documento de identidad se recibió en un formato que no es valido' })
+    }
+
     // *Validacion de campos*
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
+    if (email && !emailRegex.test(email)) {
       return res
         .status(400)
         .json({ error: 'El correo electronico no es valido' })
     }
 
-    if (phone.toString().split('').length > 9) {
-      return res.status(400).json({ error: phone.toString().split('').length })
+    if (phone && phone.toString().split('').length > 9) {
+      return res.status(400).json({ error: 'Teléfono invalido.' })
     }
 
+    const employeeToUpdate = {
+      ...req.body,
+    }
+
+    if (birthdate) employeeToUpdate['birthdate'] = new Date(birthdate)
+    if (startDate) employeeToUpdate['startDate'] = new Date(startDate)
+    
     await prisma.employee.update({
       where: {
         id: req.params.id,
       },
-      data: {
-        name,
-        lastName,
-        identityCard,
-        birthdate: new Date(birthdate),
-        gender,
-        address,
-        phone,
-        email,
-        civilStatus,
-        startDate: new Date(startDate),
-        charge,
-        baseSalary,
-      },
+      data: employeeToUpdate,
     })
     res.status(200).json({
       message: 'Se ha actualizado la información del empleado exitosamente',
