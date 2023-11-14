@@ -143,8 +143,6 @@ const editEmployee = async (req, res) => {
       return res.status(400).json({ error: 'Empleado no encontrado' })
     }
 
-    console.log('existingEmployee: ', existingEmployee);
-
     if (baseSalary && typeof baseSalary !== "number") {
       return res
         .status(400)
