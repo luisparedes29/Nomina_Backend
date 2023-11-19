@@ -4,6 +4,8 @@ const prisma = new PrismaClient() // instancia de prisma
 
 const createPayroll = async (req, res) => {
   try {
+    // TODO: add the functionality to create payroll here.
+    
     //recibimos por parametro el ID del departamento y compañia
     const { departmentId, companyId } = req.params
     //Buscamos todos los empleados que coincidan con esos valores USANDO EL AND
@@ -56,11 +58,18 @@ const getOne = async (req, res) => {
   try {
     const id = req.params._id // sacamos id de params (_id) y lo volvemos int
     const payroll = await prisma.payroll.findUnique({
-      //Buscamos en lso payrolls (id es inherentemente unique)
+      //Buscamos en los payrolls (id es inherentemente unique)
       where: {
         id: id,
       },
     })
+
+    if (!payroll) {
+      return res
+        .status(404)
+        .json({ error: 'No se encontro la nomina' })
+    }
+
     res.status(200).json({ payroll: payroll }) // DATA
   } catch (error) {
     console.error('Error al buscar la nomina:', error)

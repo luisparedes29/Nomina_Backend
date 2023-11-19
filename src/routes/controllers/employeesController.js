@@ -96,16 +96,15 @@ const allEmployees = async (req, res) => {
     }
     res.status(200).json({ employees: employees })
   } catch (error) {
-    console.error('Error al eliminar empleado:', error)
+    console.error('Error al encontrar empleados:', error)
     res.status(500).json({
-      error: 'Hubo un error al eliminar empleado.',
+      error: 'Hubo un error al encontrar los empleados.',
     })
   }
 }
 
 const getEmployeeById = async (req, res) => {
   try {
-    console.log(req.params.id)
     const employee = await prisma.employee.findUnique({
       where: {
         id: req.params.id,
@@ -125,24 +124,61 @@ const getEmployeeById = async (req, res) => {
 
 const editEmployee = async (req, res) => {
   try {
-    const employee = await prisma.employee.update({
+    const {
+      email,
+      phone,
+      birthdate,
+      startDate,
+      baseSalary,
+      identityCard
+    } = req.body
+    // *Validacion de empleado existente*
+    const existingEmployee = await prisma.employee.findUnique({
+      where: {
+        id: req.params.id
+      },
+    })
+
+    if (!existingEmployee) {
+      return res.status(400).json({ error: 'Empleado no encontrado' })
+    }
+
+    if (baseSalary && typeof baseSalary !== "number") {
+      return res
+        .status(400)
+        .json({ error: 'El salario base se recibió en un formato que no es valido' })
+    }
+
+    if (identityCard && typeof identityCard !== "number") {
+      return res
+        .status(400)
+        .json({ error: 'El documento de identidad se recibió en un formato que no es valido' })
+    }
+
+    // *Validacion de campos*
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (email && !emailRegex.test(email)) {
+      return res
+        .status(400)
+        .json({ error: 'El correo electronico no es valido' })
+    }
+
+    if (phone && phone.toString().split('').length > 9) {
+      return res.status(400).json({ error: 'Teléfono invalido.' })
+    }
+
+    const employeeToUpdate = {
+      ...req.body,
+    }
+
+    if (birthdate) employeeToUpdate['birthdate'] = new Date(birthdate)
+    if (startDate) employeeToUpdate['startDate'] = new Date(startDate)
+    
+    await prisma.employee.update({
       where: {
         id: req.params.id,
       },
-      data: {
-        name: req.body.name,
-        lastName: req.body.lastName,
-        identityCard: req.body.identityCard,
-        birthdate: req.body.birthdate,
-        gender: req.body.gender,
-        address: req.body.address,
-        phone: req.body.phone,
-        email: req.body.email,
-        civilStatus: req.body.civilStatus,
-        startDate: req.body.startDate,
-        charge: req.body.charge,
-        baseSalary: req.body.baseSalary,
-      },
+      data: employeeToUpdate,
     })
     res.status(200).json({
       message: 'Se ha actualizado la información del empleado exitosamente',
