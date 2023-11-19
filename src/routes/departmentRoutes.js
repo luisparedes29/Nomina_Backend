@@ -10,7 +10,7 @@ const {
 router
   .get('/all/:id', getAllDepartments)
   .post('/create-department/:id', createDepartment)
-  .put('/edit-department/:id', editDepartment)
+  .put('/edit-department/:companyId/:id', editDepartment)
   .delete('/delete-department/:companyId/:id', deleteDepartment)
 
 module.exports = router
