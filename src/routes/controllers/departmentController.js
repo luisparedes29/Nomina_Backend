@@ -75,6 +75,7 @@ const deleteDepartment = async (req, res) => {
   try {
     const department = await prisma.department.delete({
       where: {
+        companyId: req.params.companyId,
         id: req.params.id,
       },
     })

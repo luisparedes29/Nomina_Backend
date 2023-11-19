@@ -8,9 +8,9 @@ const {
 } = require('./controllers/departmentController')
 
 router
-  .get('/all', getAllDepartments)
+  .get('/all/:id', getAllDepartments)
   .post('/create-department/:id', createDepartment)
   .put('/edit-department/:id', editDepartment)
-  .delete('/delete-department/:id', deleteDepartment)
+  .delete('/delete-department/:companyId/:id', deleteDepartment)
 
 module.exports = router
