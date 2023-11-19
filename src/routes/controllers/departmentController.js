@@ -4,7 +4,11 @@ const prisma = new PrismaClient()
 
 const getAllDepartments = async (req, res) => {
   try {
-    const departments = await prisma.department.findMany()
+    const departments = await prisma.department.findMany({
+      where: {
+        companyId: req.params.id,
+      },
+    })
     res.status(200).json({ departments: departments })
   } catch (error) {
     console.error(error.message)
