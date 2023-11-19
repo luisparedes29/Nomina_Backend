@@ -111,7 +111,7 @@ const editUser = async (req, res) => {
         res.status(200).json({ message: 'Se ha actualizado la informacion del usuario de forma exitosa' });
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Ocurrió un error al actualizar la informacion del usuario');
+        res.status(500).json('Ocurrió un error al actualizar la informacion del usuario');
     }
 };
 
@@ -125,7 +125,7 @@ const deleteUser = async (req, res) => {
         res.status(200).json({ message: 'Se ha borrado al usuario exitosamente' });
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Se ha producido un error al intentar borrar el usuario');
+        res.status(500).json('Se ha producido un error al intentar borrar el usuario');
     }
 };
 
