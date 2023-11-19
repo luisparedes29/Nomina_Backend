@@ -11,17 +11,19 @@ router
   .post(
     '/create-payroll/:companyId/:departmentId',
     validateToken,
-    checkRole("admin"),
+    checkRole("user"),
     createPayroll
    )
   .get(
     '/all',
     validateToken,
+    checkRole("user"),
     getAll
    )
   .get(
     '/:_id',
     validateToken,
+    checkRole("user"),
     getOne
    )
 module.exports = router

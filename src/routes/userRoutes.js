@@ -12,6 +12,7 @@ router
   .get(
     '/all',
     validateToken,
+    checkRole("admin"),
     getAllUsers,
    )
   .get(
@@ -21,6 +22,8 @@ router
    )
   .post(
     '/signup/:id',
+    validateToken,
+    checkRole("admin"),
     registerUser
    )
 

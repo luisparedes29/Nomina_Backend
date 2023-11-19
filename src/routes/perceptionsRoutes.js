@@ -7,18 +7,19 @@ router
 .post(
   '/create-perception',
   validateToken,
-  checkRole('admin'),
+  checkRole("user"),
   createPerception 
  )
 .get(
   '/all',
   validateToken,
+  checkRole("user"),
   getAll
  )
 .delete(
   '/delete-perception/:_id',
   validateToken,
-  checkRole('admin'),
+  checkRole("user"),
   deleteOne
  )
 

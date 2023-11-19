@@ -12,6 +12,7 @@ router
   .get(
     '/all',
     validateToken,
+    checkRole("user"),
     getAllDepartments
   )
   .post(

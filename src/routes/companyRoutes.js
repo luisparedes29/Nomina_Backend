@@ -7,11 +7,13 @@ router
   .get(
     "/all",
     validateToken,
+    checkRole("super-admin"),
     getAllCompanies,
   )
   .get(
     "/find-company/:id",
     validateToken,
+    checkRole("admin"),
     getCompanyById
   )
   .post(
