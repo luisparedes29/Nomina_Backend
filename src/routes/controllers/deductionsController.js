@@ -27,7 +27,7 @@ const getDeductionsByEmployee = async (req, res) => {
         employeeId: req.params.id,
       },
     })
-    if (!employee) {
+    if (!deductions) {
       return res.status(404).json({ error: 'El empleado no existe' })
     }
     res.status(200).json({
@@ -63,7 +63,7 @@ const editDeduction = async (req, res) => {
         .json({ error: 'El monto se recibió en un formato que no es valido' })
     }
 
-    const employeeToUpdate = {
+    const deductionToUpdate = {
       ...req.body,
     }
 
@@ -71,7 +71,7 @@ const editDeduction = async (req, res) => {
       where: {
         id: req.params.id,
       },
-      data: employeeToUpdate,
+      data: deductionToUpdate,
     })
     res.status(200).json({
       message: 'Se ha actualizado la información de la deducción exitosamente',
