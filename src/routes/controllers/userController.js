@@ -81,14 +81,17 @@ const editUser = async (req, res) => {
         const email = data.email;
         const password = data.password;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({ error: 'El correo electronico no es valido' });
-        }
-        const existingUser = await prisma.user.findUnique({
-            where: { email },
-        });
-        if (existingUser) {
-            return res.status(400).json({ error: 'El correo electronico ya esta registrado' });
+
+        if (data.email) {
+            if (!emailRegex.test(email)) {
+                return res.status(400).json({ error: 'El correo electronico no es valido' });
+            }
+            const existingUser = await prisma.user.findUnique({
+                where: { email },
+            });
+            if (existingUser) {
+                return res.status(400).json({ error: 'El correo electronico ya esta registrado' });
+            }
         }
 
         if (password) {
