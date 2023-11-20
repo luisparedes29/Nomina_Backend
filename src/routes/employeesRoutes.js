@@ -7,11 +7,37 @@ const {
   editEmployee,
   deleteEmployee,
 } = require('./controllers/employeesController')
+const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
-  .post('/create-employee/:companyId/:departmentId', createEmployee)
-  .get('/all', allEmployees)
-  .get('/find-employee/:id', getEmployeeById)
-  .put('/edit-employee/:id', editEmployee)
-  .delete('/delete-employee/:id', deleteEmployee)
+  .post(
+    '/create-employee/:companyId/:departmentId',
+    validateToken,
+    checkRole("user"),
+    createEmployee
+   )
+  .get(
+    '/all',
+    validateToken,
+    checkRole("user"),
+    allEmployees
+   )
+  .get(
+    '/find-employee/:id',
+    validateToken,
+    checkRole("user"),
+    getEmployeeById
+   )
+  .put(
+    '/edit-employee/:id',
+    validateToken,
+    checkRole("user"),
+    editEmployee
+   )
+  .delete(
+    '/delete-employee/:id',
+    validateToken,
+    checkRole("user"),
+    deleteEmployee
+   )
 module.exports = router

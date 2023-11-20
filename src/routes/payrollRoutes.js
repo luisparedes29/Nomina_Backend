@@ -5,9 +5,25 @@ const {
   getAll,
   getOne,
 } = require('./controllers/payrollControllers')
+const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
-  .post('/create-payroll/:companyId/:departmentId', createPayroll)
-  .get('/all', getAll)
-  .get('/:_id', getOne)
+  .post(
+    '/create-payroll/:companyId/:departmentId',
+    validateToken,
+    checkRole("user"),
+    createPayroll
+   )
+  .get(
+    '/all',
+    validateToken,
+    checkRole("user"),
+    getAll
+   )
+  .get(
+    '/:_id',
+    validateToken,
+    checkRole("user"),
+    getOne
+   )
 module.exports = router
