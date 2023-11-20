@@ -77,7 +77,9 @@ const loginUser = async (req, res) => {
 
 const editUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const data = req.body;
+        const email = data.email;
+        const password = data.password;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({ error: 'El correo electronico no es valido' });
@@ -89,24 +91,19 @@ const editUser = async (req, res) => {
             return res.status(400).json({ error: 'El correo electronico ya esta registrado' });
         }
 
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
-        if (!passwordRegex.test(password)) {
-            return res.status(400).json({ error: 'La contraseña debe ser de al menos 6 caracteres, incluir una mayúscula y un número.' });
+        if (password) {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
+            if (!passwordRegex.test(password)) {
+                return res.status(400).json({ error: 'La contraseña debe ser de al menos 6 caracteres, incluir una mayúscula y un número.' });
+            }
+            const hashedPassword = await bcrypt.hash(password, 10);
+            data.password = hashedPassword;
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
         const user = await prisma.user.update({
             where: {
                 id: req.params.id,
             },
-            data: {
-                name: req.body.name,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                phone: req.body.phone,
-                address: req.body.address,
-                password: hashedPassword,
-                role: req.body.role,
-            },
+            data: data,
         });
         res.status(200).json({ message: 'Se ha actualizado la informacion del usuario de forma exitosa' });
     } catch (error) {
