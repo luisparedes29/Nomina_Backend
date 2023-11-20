@@ -75,6 +75,23 @@ const loginUser = async (req, res) => {
     }
 };
 
+const getAllUsersOfCompany = async (req, res) => {
+  try {
+    const companyId = req.params.id
+    const users = await prisma.user.findMany({
+      where: {
+        companyId: companyId,
+      },
+    })
+    res.status(200).json({ users: users })
+  } catch (error) {
+    res.status(500).json({
+      error: 'Hubo un error al momento de obtener los usuarios de la empresa',
+    })
+  }
+}
+
+
 const editUser = async (req, res) => {
     try {
         const data = req.body;
@@ -129,4 +146,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, editUser, deleteUser };
+module.exports = { registerUser, loginUser, getAllUsersOfCompany,editUser, deleteUser };

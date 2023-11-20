@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, loginUser, editUser, deleteUser } = require('./controllers/userController');
+const { registerUser, getAllUsersOfCompany, loginUser, editUser, deleteUser } = require('./controllers/userController');
 
 router
+    .get('/all-company/:id', getAllUsersOfCompany)
     .post('/signup/', registerUser)
+    .post('/login/', loginUser)
     .put('/edit/:id', editUser)
     .delete('/delete/:id', deleteUser)
 
