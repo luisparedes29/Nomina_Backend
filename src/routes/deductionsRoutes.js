@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {createDeduction, deleteDeduction, getAll, getDeductionsByEmployee} = require('./controllers/deductionsController');
+const {createDeduction, editDeduction, deleteDeduction, getAll, getDeductionsByEmployee} = require('./controllers/deductionsController');
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
   .get(
-    '/:id',
+    '/find-deductions/user/:id',
     validateToken,
     checkRole("user"),
     getDeductionsByEmployee,
@@ -16,6 +16,12 @@ router
     checkRole("user"),
     getAll
   )
+  .put(
+    '/edit-deduction/:id',
+    validateToken,
+    checkRole("user"),
+    editDeduction
+   )
   .post(
     '/create-deduction',
     validateToken,
@@ -23,7 +29,7 @@ router
     createDeduction
   )
   .delete(
-    '/delete-deduction',
+    '/delete-deduction/:id',
     validateToken,
     checkRole("user"),
     deleteDeduction

@@ -39,11 +39,58 @@ const getDeductionsByEmployee = async (req, res) => {
   }
 }
 
+// * Endpoint para editar una deduccion existente *
+const editDeduction = async (req, res) => {
+  try {
+    const {
+      amount,
+    } = req.body
+    const deductionId = req.params.id;
+
+    const deductionExist = await prisma.deductions.findFirst({
+      where: {
+        id: deductionId,
+      },
+    });
+
+    if (!deductionExist) {
+      return res.status(400).json({ error: "La deduccion no se ha encontrado" });
+    }
+
+    if (amount && typeof amount !== "number") {
+      return res
+        .status(400)
+        .json({ error: 'El monto se recibió en un formato que no es valido' })
+    }
+
+    const employeeToUpdate = {
+      ...req.body,
+    }
+
+    await prisma.employee.update({
+      where: {
+        id: req.params.id,
+      },
+      data: employeeToUpdate,
+    })
+    res.status(200).json({
+      message: 'Se ha actualizado la información de la deducción exitosamente',
+    })
+  } catch (error) {
+    console.error(error.message)
+    res
+      .status(500)
+      .send(
+        'Se ha producido un error al intentar actualizar la información de la deducción'
+      )
+  }
+}
+
 const createDeduction = async (req, res) => {
   try {
     const { name, amount, taxInformation, payrollId, companyId, employeeId } =
       req.body; // Traemos esto del req. PD: Por los ID es que vamos a hacer la conexion con las otras tablas para las relaciones respectivas
-    if (!name || !amount || !taxInformation) {
+    if (!name || !amount || !taxInformation || !payrollId || !companyId || !employeeId) {
       return res
         .status(400)
         .json({
@@ -91,7 +138,7 @@ const deleteDeduction = async (req, res) => {
 
     await prisma.deductions.delete({
       where: {
-        id: req.params.id,
+        id: deductionId,
       },
     })
     res.status(200).json({ message: 'Se ha borrado la deducción exitosamente' })
@@ -99,8 +146,8 @@ const deleteDeduction = async (req, res) => {
     console.error('Error al eliminar la deducción: ', error.message);
     res
       .status(500)
-      .send('Se ha producido un error al intentar borrar al empleado')
+      .send('Se ha producido un error al intentar borrar la deducción')
   }
 };
 
-module.exports = { createDeduction, deleteDeduction, getAll, getDeductionsByEmployee };
+module.exports = { createDeduction, editDeduction, deleteDeduction, getAll, getDeductionsByEmployee };
