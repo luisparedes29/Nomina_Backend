@@ -10,7 +10,7 @@ const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
   .get(
-    '/all',
+    '/all/:id',
     validateToken,
     checkRole("user"),
     getAllDepartments
@@ -22,13 +22,13 @@ router
     createDepartment
   )
   .put(
-    '/edit-department/:id',
+    '/edit-department/:companyId/:id',
     validateToken,
     checkRole("admin"),
     editDepartment
   )
   .delete(
-    '/delete-department/:id',
+    '/delete-department/:companyId/:id',
     validateToken,
     checkRole("admin"),
     deleteDepartment
