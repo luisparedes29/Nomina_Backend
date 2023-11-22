@@ -104,17 +104,6 @@ const registerUser = async (req, res) => {
     }
   }
   
-  const getAllUsers = async (req, res) => {
-    try {
-      const users = await prisma.user.findMany()
-      res.status(200).json({ users: users })
-    } catch (error) {
-      res.status(500).json({
-        error: 'Hubo un error al momento de obtener los usuarios',
-      })
-    }
-  }
-
 const getAllUsersOfCompany = async (req, res) => {
   try {
     const companyId = req.params.id
