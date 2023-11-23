@@ -17,7 +17,7 @@ router
     editDeduction
    )
   .post(
-    '/create-deduction',
+    '/create-deduction/:companyId/:payrollId/:employeeId',
     validateToken,
     checkRole("user"),
     createDeduction

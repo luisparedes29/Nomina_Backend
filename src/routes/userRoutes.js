@@ -27,7 +27,7 @@ router
     editUser
   )
   .delete(
-    '/delete/:id',
+    '/delete/:id/:employeeId',
     validateToken,
     checkRole("admin"),
     deleteUser

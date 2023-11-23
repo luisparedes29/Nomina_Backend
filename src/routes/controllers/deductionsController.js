@@ -86,7 +86,8 @@ const editDeduction = async (req, res) => {
 
 const createDeduction = async (req, res) => {
   try {
-    const { name, amount, taxInformation, payrollId, companyId, employeeId } =
+    const { payrollId, companyId, employeeId } = req.params
+    const { name, amount, taxInformation } =
       req.body; // Traemos esto del req. PD: Por los ID es que vamos a hacer la conexion con las otras tablas para las relaciones respectivas
     if (!name || !amount || !taxInformation || !payrollId || !companyId || !employeeId) {
       return res
@@ -129,6 +130,7 @@ const createDeduction = async (req, res) => {
 const deleteDeduction = async (req, res) => {
   try {
     const deductionId = req.params.id;
+    const employeeId = req.params.employeeId;
 
     if (!deductionId) {
       return res.status(400).json({ error: "Es obligatorio especificar el ID de la deducción" });
@@ -137,6 +139,7 @@ const deleteDeduction = async (req, res) => {
     await prisma.deductions.delete({
       where: {
         id: deductionId,
+        employeeId: employeeId,
       },
     })
     res.status(200).json({ message: 'Se ha borrado la deducción exitosamente' })
