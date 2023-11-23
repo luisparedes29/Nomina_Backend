@@ -56,7 +56,7 @@ const createEmployee = async (req, res) => {
     if (existingEmployee) {
       return res.status(400).json({ error: 'Empleado ya resgistrado' })
     }
-    if (phone.toString().split('').length > 9) {
+    if (phone.toString().split('').length > 15) {
       return res.status(400).json({ error: 'Teléfono invalido.' })
     }
     const newEmployee = await prisma.employee.create({
