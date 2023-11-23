@@ -2,38 +2,43 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-const getAll = async (req, res) => {
-  try {
-    const perceptions = await prisma.perception.findMany();
-    if (perceptions.length == 0) {
-      return res
-        .status(404)
-        .json({ error: "No se encuentran perpecepciones registradas" });
-    }
-    return res.status(200).json({ perceptions: perceptions });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Hubo un error al buscar percepciones" });
-  }
-};
-
 // * Obtener las percepciones por empleado *
 const getPerceptionByEmployee = async (req, res) => {
   try {
+    const employeeId = req.params.employeeId;
+    const companyId = req.params.companyId;
+
+    if (!employeeId) {
+      return res.status(400).json({ error: "Es obligatorio especificar el ID del empleado" });
+    }
+    if (!companyId) {
+      return res.status(400).json({ error: "Es obligatorio especificar el ID de la empresa" });
+    }
+
+    // *Validacion de empleado existente*
+    const existingEmployee = await prisma.employee.findUnique({
+      where: {
+        id: employeeId
+      },
+    })
+
+    if (!existingEmployee) {
+      return res.status(400).json({ error: 'Empleado no encontrado' })
+    }
+
     const perception = await prisma.perception.findUnique({
       where: {
-        employeeId: req.params.id,
+        employeeId,
+        companyId,
       },
     });
-    if (!perception) {
-      return res.status(404).json({ error: "El empleado no existe" });
-    }
+
     res.status(200).json({
       perception,
     });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Error al buscar el empleado");
+    res.status(500).send("Error al buscar el las percepciones del empleado");
   }
 };
 
@@ -41,11 +46,13 @@ const getPerceptionByEmployee = async (req, res) => {
 const editPerception = async (req, res) => {
   try {
     const { amount } = req.body;
-    const perceptionId = req.params.id;
+    const perceptionId = req.params.perceptionId;
+    const employeeId = req.params.employeeId;
 
     const perceptionExist = await prisma.perception.findFirst({
       where: {
         id: perceptionId,
+        employeeId: employeeId,
       },
     });
 
@@ -67,7 +74,8 @@ const editPerception = async (req, res) => {
 
     await prisma.perception.update({
       where: {
-        id: req.params.id,
+        id: perceptionId,
+        employeeId: employeeId,
       },
       data: perceptionToUpdate,
     });
@@ -150,7 +158,6 @@ const deleteOne = async (req, res) => {
 };
 
 module.exports = {
-  getAll,
   getPerceptionByEmployee,
   createPerception,
   editPerception,

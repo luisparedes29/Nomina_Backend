@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getAll, getPerceptionByEmployee, createPerception, editPerception, deleteOne } = require('./controllers/perceptionsController')
+const { getPerceptionByEmployee, createPerception, editPerception, deleteOne } = require('./controllers/perceptionsController')
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
@@ -16,14 +16,8 @@ router
    checkRole("user"),
    getPerceptionByEmployee,
  )
-.get(
-  '/all',
-  validateToken,
-  checkRole("user"),
-  getAll
- )
  .put(
-   '/edit-perception/:id',
+   '/edit-perception/:perceptionId/:employeeId',
    validateToken,
    checkRole("user"),
    editPerception

@@ -5,7 +5,7 @@ const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
   .get(
-    '/find-deductions/user/:id',
+    '/find-deductions/user/:companyId/:employeeId',
     validateToken,
     checkRole("user"),
     getDeductionsByEmployee,
