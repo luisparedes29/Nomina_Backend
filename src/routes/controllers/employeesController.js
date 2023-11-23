@@ -86,9 +86,13 @@ const createEmployee = async (req, res) => {
   }
 }
 
-const allEmployees = async (req, res) => {
+const allEmployeesOfCompany = async (req, res) => {
   try {
-    const employees = await prisma.Employee.findMany()
+    const employees = await prisma.employee.findMany({
+      where: {
+        companyId: req.params.companyId,
+      },
+    })
     if (employees.length == 0) {
       return res
         .status(404)
@@ -175,7 +179,7 @@ const deleteEmployee = async (req, res) => {
 
 module.exports = {
   createEmployee,
-  allEmployees,
+  allEmployeesOfCompany,
   getEmployeeById,
   editEmployee,
   deleteEmployee,
