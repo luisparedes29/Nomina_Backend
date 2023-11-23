@@ -93,7 +93,7 @@ model Employee {
   birthdate       DateTime
   gender          String
   address         String
-  phone           Int
+  phone           String
   email           String            @unique
   civilStatus     String
   startDate       DateTime
