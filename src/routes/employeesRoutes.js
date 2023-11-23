@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {
   createEmployee,
-  allEmployees,
+  allEmployeesOfCompany,
   getEmployeeById,
   editEmployee,
   deleteEmployee,
@@ -11,33 +11,33 @@ const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
   .post(
-    '/create-employee/:companyId/:departmentId',
+  '/create-employee/:companyId/:departmentId',
     validateToken,
     checkRole("user"),
     createEmployee
-   )
+  )
   .get(
-    '/all',
+  '/all-company/:companyId',
     validateToken,
     checkRole("user"),
-    allEmployees
-   )
+    allEmployeesOfCompany
+  )
   .get(
-    '/find-employee/:id',
+  '/find-employee/:id',
     validateToken,
     checkRole("user"),
     getEmployeeById
-   )
+  )
   .put(
-    '/edit-employee/:id',
+  '/edit-employee/:id',
     validateToken,
     checkRole("user"),
     editEmployee
-   )
+  )
   .delete(
-    '/delete-employee/:id',
+  '/delete-employee/:id',
     validateToken,
     checkRole("user"),
     deleteEmployee
-   )
+  )
 module.exports = router
