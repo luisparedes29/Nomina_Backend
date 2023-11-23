@@ -129,7 +129,7 @@ const createDeduction = async (req, res) => {
 
 const deleteDeduction = async (req, res) => {
   try {
-    const deductionId = req.params.id;
+    const deductionId = req.params.deductionId;
     const employeeId = req.params.employeeId;
 
     if (!deductionId) {

@@ -94,7 +94,8 @@ const editPerception = async (req, res) => {
 
 const createPerception = async (req, res) => {
   try {
-    const { name, amount, taxInformation, payrollId, companyId, employeeId } =
+    const { payrollId, companyId, employeeId } = req.params
+    const { name, amount, taxInformation } =
       req.body;
     if (
       !name ||
@@ -142,10 +143,13 @@ const createPerception = async (req, res) => {
 
 const deleteOne = async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
+    const perceptionId = req.params.perceptionId;
+    const employeeId = req.params.employeeId;
+
     await prisma.perception.delete({
       where: {
-        id: id,
+        id: perceptionId,
+        employeeId,
       },
     });
     res.status(200).json({ message: "Se elimino correctamente" });

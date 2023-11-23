@@ -5,7 +5,7 @@ const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
 .post(
-  '/create-perception',
+  '/create-perception/:companyId/:payrollId/:employeeId',
   validateToken,
   checkRole("user"),
   createPerception 
@@ -23,7 +23,7 @@ router
    editPerception
   )
 .delete(
-  '/delete-perception/:id',
+  '/delete-perception/:perceptionId/:employeeId',
   validateToken,
   checkRole("user"),
   deleteOne

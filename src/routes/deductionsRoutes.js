@@ -23,7 +23,7 @@ router
     createDeduction
   )
   .delete(
-    '/delete-deduction/:id',
+    '/delete-deduction/:deductionId/:employeeId',
     validateToken,
     checkRole("user"),
     deleteDeduction
