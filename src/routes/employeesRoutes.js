@@ -10,7 +10,7 @@ const {
 
 router
   .post('/create-employee/:companyId/:departmentId', createEmployee)
-  .get('/all', allEmployeesOfCompany)
+  .get('/all-company/:companyId', allEmployeesOfCompany)
   .get('/find-employee/:id', getEmployeeById)
   .put('/edit-employee/:id', editEmployee)
   .delete('/delete-employee/:id', deleteEmployee)
