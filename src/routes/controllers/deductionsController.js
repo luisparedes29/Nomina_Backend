@@ -2,40 +2,38 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-const getAll = async (req, res) => {
-  try {
-    const deductions = await prisma.deductions.findMany()
-    if (deductions.length == 0) {
-      return res
-        .status(404)
-        .json({ error: 'No se encontraron deducciones registradas' })
-    }
-    res.status(200).json({ deductions })
-  } catch (error) {
-    console.error('Error al encontrar deducciones:', error)
-    res.status(500).json({
-      error: 'Hubo un error al encontrar los deducciones.',
-    })
-  }
-};
-
 // * Obtener las deducciones por empleado *
 const getDeductionsByEmployee = async (req, res) => {
   try {
-    const deductions = await prisma.deductions.findUnique({
+    const employeeId = req.params.id;
+
+    if (!employeeId) {
+      return res.status(400).json({ error: "Es obligatorio especificar el ID del empleado" });
+    }
+
+    // *Validacion de empleado existente*
+    const existingEmployee = await prisma.employee.findUnique({
       where: {
-        employeeId: req.params.id,
+        id: employeeId
       },
     })
-    if (!deductions) {
-      return res.status(404).json({ error: 'El empleado no existe' })
+
+    if (!existingEmployee) {
+      return res.status(400).json({ error: 'Empleado no encontrado' })
     }
+
+    const deductions = await prisma.deductions.findUnique({
+      where: {
+        employeeId: employeeId,
+      },
+    })
+
     res.status(200).json({
       deductions,
     })
   } catch (error) {
     console.error(error.message)
-    res.status(500).send('Error al buscar el empleado')
+    res.status(500).send('Error al obtener las deducciones del empleado')
   }
 }
 
@@ -150,4 +148,4 @@ const deleteDeduction = async (req, res) => {
   }
 };
 
-module.exports = { createDeduction, editDeduction, deleteDeduction, getAll, getDeductionsByEmployee };
+module.exports = { createDeduction, editDeduction, deleteDeduction, getDeductionsByEmployee };

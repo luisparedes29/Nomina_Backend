@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {createDeduction, editDeduction, deleteDeduction, getAll, getDeductionsByEmployee} = require('./controllers/deductionsController');
+const {createDeduction, editDeduction, deleteDeduction, getDeductionsByEmployee} = require('./controllers/deductionsController');
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
@@ -9,12 +9,6 @@ router
     validateToken,
     checkRole("user"),
     getDeductionsByEmployee,
-  )
-  .get(
-    '/all',
-    validateToken,
-    checkRole("user"),
-    getAll
   )
   .put(
     '/edit-deduction/:id',
