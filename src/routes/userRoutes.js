@@ -4,7 +4,7 @@ const { registerUser, getAllUsersOfCompany, loginUser, editUser, deleteUser } = 
 
 router
     .get('/all-company/:id', getAllUsersOfCompany)
-    .post('/signup/', registerUser)
+    .post('/signup/:id', registerUser)
     .post('/login/', loginUser)
     .put('/edit/:id', editUser)
     .delete('/delete/:id', deleteUser)
