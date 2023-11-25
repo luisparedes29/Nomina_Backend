@@ -14,6 +14,8 @@ model Company {
   id   String @id @default(uuid())
   name String
   type String
+  currency String
+  country String
 
   User             User[]
   Setting          Setting[]

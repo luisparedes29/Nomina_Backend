@@ -28,6 +28,8 @@ const createSuperUser = async () => {
             create: {
               name: 'superAdmin',
               type: 'superAdmin',
+              currency: 'superAdmin',
+              country: 'superAdmin'
             },
           },
         },
