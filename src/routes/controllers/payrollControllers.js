@@ -4,16 +4,23 @@ const prisma = new PrismaClient(); // instancia de prisma
 
 const generatePayroll = async (req, res) => {
     try {
-        const departmentId = req.params.departmentId;
+        const { departmentId, companyId } = req.params
         const employees = await prisma.employee.findMany({
             where: {
-                departmentId: departmentId,
+              AND: [
+                {
+                  departmentId: departmentId,
+                },
+                {
+                  companyId: companyId,
+                },
+              ],
             },
-        });
-        if (employees.length == 0) {
+          })
+          if (employees.length == 0) {
             return res.status(404).json({
-                error: 'No se encontraron empleados registrados en ese departamento.',
-            });
+              error: 'No se encontraron empleados registrados en ese departamento.',
+            })
         }
         //si existen los devolvemos
         res.status(200).json({ employees: employees });

@@ -11,7 +11,7 @@ router
     getAllUsersOfCompany
   )
   .post(
-    '/signup/',
+    '/signup/:id',
     validateToken,
     checkRole("admin"),
     registerUser
