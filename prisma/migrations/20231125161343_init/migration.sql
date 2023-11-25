@@ -82,13 +82,15 @@ CREATE TABLE `Employee` (
     `birthdate` DATETIME(3) NOT NULL,
     `gender` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NOT NULL,
-    `phone` INTEGER NOT NULL,
+    `phone` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
+    `acount` VARCHAR(191) NOT NULL,
     `civilStatus` VARCHAR(191) NOT NULL,
     `startDate` DATETIME(3) NOT NULL,
     `charge` VARCHAR(191) NOT NULL,
     `baseSalary` DOUBLE NOT NULL,
     `departmentId` VARCHAR(191) NOT NULL,
+    `companyId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Employee_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -161,6 +163,9 @@ ALTER TABLE `Payroll` ADD CONSTRAINT `Payroll_companyId_fkey` FOREIGN KEY (`comp
 
 -- AddForeignKey
 ALTER TABLE `Employee` ADD CONSTRAINT `Employee_departmentId_fkey` FOREIGN KEY (`departmentId`) REFERENCES `Department`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Employee` ADD CONSTRAINT `Employee_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `payrollEmployee` ADD CONSTRAINT `payrollEmployee_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
