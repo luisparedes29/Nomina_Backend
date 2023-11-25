@@ -12,25 +12,25 @@ router
   .get(
     '/all/:id',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     getAllDepartments
   )
   .post(
     '/create-department/:id',
     validateToken,
-    checkRole("admin"),
+    checkRole(["admin"]),
     createDepartment
   )
   .put(
     '/edit-department/:companyId/:id',
     validateToken,
-    checkRole("admin"),
+    checkRole(["admin"]),
     editDepartment
   )
   .delete(
     '/delete-department/:companyId/:id',
     validateToken,
-    checkRole("admin"),
+    checkRole(["admin"]),
     deleteDepartment
   )
 

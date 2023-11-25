@@ -7,13 +7,13 @@ router
   .get(
     '/all-company/:id',
     validateToken,
-    checkRole("admin"),
+    checkRole(["admin", "super-admin"]),
     getAllUsersOfCompany
   )
   .post(
     '/signup/:id',
     validateToken,
-    checkRole("admin"),
+    checkRole(["admin", "super-admin"]),
     registerUser
   )
   .post(
@@ -23,13 +23,13 @@ router
   .put(
     '/edit/:id',
     validateToken,
-    checkRole("admin"),
+    checkRole(["admin", "super-admin"]),
     editUser
   )
   .delete(
     '/delete/:id',
     validateToken,
-    checkRole("admin"),
+    checkRole(["admin", "super-admin"]),
     deleteUser
   )
 

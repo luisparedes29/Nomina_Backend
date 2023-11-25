@@ -7,19 +7,19 @@ router
   .get(
     '/all',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     getAll
   )
   .post(
     '/create-deduction',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     createDeduction
   )
   .delete(
     '/delete-deduction',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     deleteDeduction
   )
 

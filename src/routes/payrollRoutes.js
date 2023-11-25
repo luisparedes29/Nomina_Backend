@@ -10,13 +10,13 @@ router
   .get(
     '/generate-payroll/:companyId/:departmentId',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     generatePayroll
   )
   .get(
     '/:_id',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     getOne
   )
 module.exports = router
