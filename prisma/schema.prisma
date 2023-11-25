@@ -95,6 +95,7 @@ model Employee {
   address         String
   phone           String
   email           String            @unique
+  acount          String
   civilStatus     String
   startDate       DateTime
   charge          String
