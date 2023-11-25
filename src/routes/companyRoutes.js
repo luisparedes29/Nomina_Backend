@@ -3,12 +3,12 @@ const router = express.Router()
 const {
   getAllCompanies,
   createCompany,
-  getCompanyById,
+  getCompanyById
 } = require('./controllers/companyController')
 const { validateToken, checkRole } = require('./controllers/jwtAuth')
 
 router
-  .get('/all', validateToken, checkRole(['super-admin']), getAllCompanies)
+  .get('/all', validateToken, checkRole(['superAdmin']), getAllCompanies)
   .get(
     '/find-company/:id',
     validateToken,
