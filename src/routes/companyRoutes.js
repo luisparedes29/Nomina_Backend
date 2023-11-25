@@ -4,11 +4,23 @@ const { getAllCompanies, createCompany, getCompanyById } = require("./controller
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
-  .get("/all", getAllCompanies) // La protección de ruta con el chequeo del rol de "admin" está aquí solo para probar que funcione.
-                                                                        // Debe borrarse lueego y proteger las rutas adecuadamente segun los roles que les correspondan
-
-  .get("/find-company/:id", getCompanyById)
-
-  .post("/create-company", createCompany);
+  .get(
+    "/all",
+    validateToken,
+    checkRole(["super-admin"]),
+    getAllCompanies,
+  )
+  .get(
+    "/find-company/:id",
+    validateToken,
+    checkRole(["super-admin", "admin"]),
+    getCompanyById
+  )
+  .post(
+    "/create-company",
+    validateToken,
+    checkRole(["super-admin"]),
+    createCompany
+  );
 
 module.exports = router;
