@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getAllCompanies, createCompany, getCompanyById   editCompany, deleteCompany } = require("./controllers/companyController");
+const { getAllCompanies, createCompany, getCompanyById,   editCompany, deleteCompany } = require("./controllers/companyController");
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 const {validateCreate, validateGetById} = require("./validators/companyRoutes")
 
@@ -10,12 +10,14 @@ router
     '/find-company/:id',
     validateToken,
     checkRole(['superAdmin', 'admin']),
+    validateGetById,
     getCompanyById
   )
   .post(
     '/create-company',
     validateToken,
     checkRole(['superAdmin']),
+    validateCreate,
     createCompany
   )
 
