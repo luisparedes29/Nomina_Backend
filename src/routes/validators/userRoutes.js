@@ -33,7 +33,6 @@ const signup = [
         .exists()
         .notEmpty()
         .withMessage("Campo obligatorio")
-        .isNumeric()
         .isLength({
             min: 10,
             max: 10
@@ -126,7 +125,6 @@ const validateEdit = [
         .optional({
             values: "falsy"
         })
-        .isNumeric()
         .isLength({
             min: 10,
             max: 10

@@ -15,6 +15,7 @@ router
     '/create-employee/:companyId/:departmentId',
     validateToken,
     checkRole(['admin', 'user']),
+    validateCreate,
     createEmployee
   )
   .get(

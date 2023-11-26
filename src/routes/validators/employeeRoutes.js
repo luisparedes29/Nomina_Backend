@@ -56,12 +56,11 @@ const validateCreate = [
     .exists()
     .notEmpty()
     .withMessage("Campo obligatorio")
-    .isNumeric()
     .isLength({
-        min: 9,
-        max: 9
+        min: 10,
+        max: 10
     })
-    .withMessage("Teléfono debe de contener 9 caracteres."),
+    .withMessage("Teléfono debe de contener 10 caracteres."),
     body("civilStatus")
     .exists()
     .notEmpty()
@@ -97,7 +96,6 @@ const validateCreate = [
     param("companyId")
     .exists()
     .notEmpty()
-    .withMessage("Campo obligatorio")
     .custom(async value => {
         const companyExist = await prisma.company.findUnique({
             where:
@@ -192,7 +190,6 @@ const validateEdit = [
     .optional({
         values: "falsy"
     })
-    .isNumeric()
     .isLength({
         min: 9,
         max: 9

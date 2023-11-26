@@ -3,6 +3,8 @@ const {validate} = require('../../helpers/validatorHelper')
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient(); 
 
+// este validador fue creado a partir del código para crear una nomina. 
+
 const validateCreate = [ 
     body("employee")
     .exists()
