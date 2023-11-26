@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
- const {createDeduction, deleteDeduction, getAll} = require('./controllers/deductionsController');
+const {createDeduction, deleteDeduction, getAll} = require('./controllers/deductionsController');
 
 router
 .get('/all', getAll)

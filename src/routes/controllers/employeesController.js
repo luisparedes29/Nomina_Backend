@@ -20,9 +20,6 @@ const createEmployee = async (req, res) => {
             baseSalary,
             identityCard,
         } = req.body
-        if (phone.toString().split('').length > 9) {
-            return res.status(400).json({ error: 'Teléfono invalido.' });
-        }
         const newEmployee = await prisma.employee.create({
             data: {
                 name,

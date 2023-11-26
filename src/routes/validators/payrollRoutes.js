@@ -69,10 +69,20 @@ const validateCreate = [
     .exists()
     .notEmpty()
     .withMessage("Campo es obligatorio"),
-    body("companyId")
+    param("companyId")
     .exists()
     .notEmpty()
-    .withMessage("Campo es obligatorio"),
+    .withMessage("Campo es obligatorio")
+    .custom(async value => {
+        const existingCompany = await prisma.company.findUnique({
+            where: {
+                id : value
+            }
+        })
+        if(!existingCompany){
+            return Promise.reject("Compañia no encontrada")
+        }
+    }),
     body("employee")
     .exists()
     .notEmpty()

@@ -79,12 +79,11 @@ const validateCreate = [
     .notEmpty()
     .isFloat()
     .withMessage("Campo obligatorio"),
-    body("departmentId")
+    param("departmentId")
     .exists()
     .notEmpty()
     .withMessage("Campo obligatorio")
     .custom(async (value) => {
-        console.log("THIS WORk")
         const departmentExists = await prisma.department.findUnique({
             where:{
                 id : value
@@ -92,6 +91,20 @@ const validateCreate = [
         })
         if(!departmentExists){
             return Promise.reject("No se ha encontrado departamento")
+        }
+        return true
+    }),
+    param("companyId")
+    .exists()
+    .notEmpty()
+    .withMessage("Campo obligatorio")
+    .custom(async value => {
+        const companyExist = await prisma.company.findUnique({
+            where:
+            {id: value}
+        })
+        if(!companyExist){
+            return Promise.reject("No se ha encontrado compañia")
         }
         return true
     }),

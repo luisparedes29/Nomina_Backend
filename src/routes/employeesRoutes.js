@@ -9,9 +9,9 @@ const {validateCreate, validateEdit} = require('./validators/employeeRoutes')
 
  
 router
-  .post("/create-employee", createEmployee) 
+  .post("/create-employee", validateCreate, createEmployee) 
   .get("/all", allEmployeesOfCompany)
   .get('/find-employee/:id', getEmployeeById)
-  .put("/edit-employee/:id", editEmployee)
+  .put("/edit-employee/:id", validateEdit, editEmployee)
   .delete("/delete-employee/:id", deleteEmployee) 
 module.exports = router;
