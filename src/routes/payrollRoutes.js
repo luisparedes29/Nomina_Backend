@@ -4,7 +4,7 @@ const { generatePayroll, allPayrollsOfCompany, getOne } = require('./controllers
 const {validateCreate} = require('./validators/payrollRoutes')
  
 router
-  .post("/generate-payroll/:companyId/:departmentId", validateCreate, generatePayroll) 
+  .post("/generate-payroll/:companyId/:departmentId", generatePayroll) 
   .get("/all",  allPayrollsOfCompany)
   .get("/:_id", getOne)
 module.exports = router;
