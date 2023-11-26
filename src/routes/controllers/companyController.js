@@ -1,4 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
+const {matchedData} = require('express-validator')
+
 
 const prisma = new PrismaClient();
 // use `prisma` in your application to read and write data in your DB
@@ -25,30 +27,21 @@ const getCompanyById = async (req, res) => {
                 id: req.params.id,
             },
         });
-        if (!company) {
-            return res.status(404).json({ error: 'La empresa no existe' });
-        }
         res.status(200).json({
             company: company,
         });
     } catch (error) {
         console.error(error.message);
-        res.status(500).send('Error al buscar la empresa');
+        res.status(500).json({
+            error: error
+        });
     }
 };
 
 const createCompany = async (req, res) => {
     try {
         const { name, type } = req.body;
-        if (!name || !type) {
-            return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
-        }
-        const existingCompany = await prisma.company.findFirst({
-            where: { name },
-        });
-        if (existingCompany) {
-            return res.status(400).json({ error: 'Empresa en existencia' });
-        }
+        console.log(req.body)
         const newCompany = await prisma.company.create({
             data: {
                 name,

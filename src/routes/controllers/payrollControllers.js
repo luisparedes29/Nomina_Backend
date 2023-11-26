@@ -23,7 +23,8 @@ const generatePayroll = async (req, res) => {
             })
         }
         //si existen los devolvemos
-        res.status(200).json({ employees: employees });
+        res.status(200).json({ newPayroll: newPayroll });
+        
     } catch (error) {
         console.error('Error al crear nomina:', error);
         res.status(500).json({

@@ -16,39 +16,21 @@ const getAllDepartments = async (req, res) => {
   }
 }
 
-const createDepartment = async (req, res) => {
+const createDepartment = async (req, res) => { 
   try {
-    const name = req.body.name
-    const companyId = req.params.id
-
-    await prisma.$transaction(async (tx) => {
-      //validamos que no exista otro departamento con el mismo nombre
-      const validateNameDepartment = await tx.department.findMany({
-        where: {
-          name: name,
-          companyId: companyId,
-        },
-      })
-      if (!validateNameDepartment[0]) {
-        const newApartment = await tx.department.create({
-          data: {
+    const { name, companyId } = req.body; 
+    const newApartment = await prisma.department.create({
+        data: {
             name,
             companyId,
-          },
-        })
-        res.status(200).json({ newApartment: newApartment })
-      } else {
-        throw new Error('Ya existe un departamento con ese nombre')
-      }
-    })
+        },
+    });
+    res.status(200).json({ newApartment: newApartment });
   } catch (error) {
-    res.status(500).json({
-      error:
-        'Se ha producido un error al crear el departamento, ' + error.message,
-    })
+    console.error(error.message);
+    res.status(500).send('Se ha producido un error al crear el departamento ');
   }
-}
-
+};
 const editDepartment = async (req, res) => {
   try {
     //usamos $transaction para poder realizar varias consultas dependiendo que ninguna falle
