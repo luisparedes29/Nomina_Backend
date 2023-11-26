@@ -19,7 +19,7 @@ const createEmployee = async (req, res) => {
       charge,
       baseSalary,
       identityCard,
-      acount,
+      bankAccount,
     } = req.body
     if (
       !name ||
@@ -33,7 +33,7 @@ const createEmployee = async (req, res) => {
       !civilStatus ||
       !startDate ||
       !charge ||
-      !acount ||
+      !bankAccount ||
       !baseSalary ||
       !departmentId ||
       !companyId
@@ -49,8 +49,8 @@ const createEmployee = async (req, res) => {
         .status(400)
         .json({ error: 'El correo electronico no es valido' })
     }
-    const acountRegex = /^\d{10,12}$/
-    if (!acountRegex.test(acount)) {
+    const bankAccountRegex = /^\d{10,12}$/
+    if (!bankAccountRegex.test(bankAccount)) {
       return res.status(400).json({ error: 'Cuenta invalida.' })
     }
     const existingEmployee = await prisma.employee.findUnique({
@@ -76,7 +76,7 @@ const createEmployee = async (req, res) => {
         phone,
         email,
         civilStatus,
-        acount,
+        bankAccount,
         startDate: new Date(startDate),
         charge,
         baseSalary,

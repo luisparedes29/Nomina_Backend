@@ -39,8 +39,8 @@ const getCompanyById = async (req, res) => {
 
 const createCompany = async (req, res) => {
     try {
-        const { name, type } = req.body;
-        if (!name || !type) {
+        const { name, type, currency, country } = req.body;
+        if (!name || !type || !currency || !country) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
         const existingCompany = await prisma.company.findFirst({
@@ -53,6 +53,8 @@ const createCompany = async (req, res) => {
             data: {
                 name,
                 type,
+                currency,
+                country
             },
         });
         res.status(200).json({ newCompany: newCompany });
@@ -64,4 +66,37 @@ const createCompany = async (req, res) => {
     }
 };
 
-module.exports = { getAllCompanies, createCompany, getCompanyById };
+const editCompany = async (req, res) => {
+    try {
+        const data = req.body;
+        const company = await prisma.company.update({
+            where: {
+                id: req.params.id,
+            },
+            data: data,
+        })
+        res.status(200).json({ message: 'Se ha actualizado la informacion de la empresa de forma exitosa', newCompanyInfo: data });
+    } catch (error) {
+        console.log(error);
+        console.error(error.message);
+        res.status(500).json('Ocurrió un error al actualizar la informacion de la empresa');
+    }    
+}
+
+const deleteCompany = async (req, res) => {
+    try {
+        const company = await prisma.company.delete({
+            where: {
+                id: req.params.id,
+            },
+        });
+        res.status(200).json({ message: 'Se ha eliminado la empresa de la base de datos' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            error: 'Hubo un error al intentar eliminar la empresa de la base de datos',
+        });
+    }
+}
+
+module.exports = { getAllCompanies, createCompany, getCompanyById, editCompany, deleteCompany };

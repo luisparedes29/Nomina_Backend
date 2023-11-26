@@ -3,7 +3,9 @@ const router = express.Router()
 const {
   getAllCompanies,
   createCompany,
-  getCompanyById
+  getCompanyById,
+  editCompany,
+  deleteCompany
 } = require('./controllers/companyController')
 const { validateToken, checkRole } = require('./controllers/jwtAuth')
 
@@ -20,6 +22,20 @@ router
     validateToken,
     checkRole(['superAdmin']),
     createCompany
+  )
+
+  .put(
+    '/edit-company/:id',
+    validateToken,
+    checkRole(['superAdmin']),
+    editCompany
+  )
+
+  .delete(
+    '/delete-company/:id',
+    validateToken,
+    checkRole(['superAdmin']),
+    deleteCompany
   )
 
 module.exports = router
