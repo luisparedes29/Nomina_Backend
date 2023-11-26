@@ -75,24 +75,33 @@ const getAllUsersOfCompany = async (req, res) => {
 
 const editUser = async (req, res) => {
     try {
-        const data = req.body;
-        const email = data.email;
-        const password = data.password;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (password) {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            data.password = hashedPassword;
-        }
+        const {
+            name,
+            lastName,
+            email,
+            phone,
+            address,
+            password,
+            role,
+        } = req.body;
+        const phoneStr = phone.toString()
         const user = await prisma.user.update({
             where: {
                 id: req.params.id,
             },
-            data: data,
+            data: {
+                name,
+                lastName,
+                email,
+                phone: phoneStr,
+                address,
+                password,
+                role,
+            },
         });
         res.status(200).json({ message: 'Se ha actualizado la informacion del usuario de forma exitosa' });
     } catch (error) {
-        console.error(error.message);
+        console.error(error);
         res.status(500).json('Ocurrió un error al actualizar la informacion del usuario');
     }
 };
