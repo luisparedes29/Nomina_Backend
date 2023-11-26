@@ -1,15 +1,37 @@
 const express = require("express");
 const router = express.Router();
-const { getAllCompanies, createCompany, getCompanyById } = require("./controllers/companyController");
+const { getAllCompanies, createCompany, getCompanyById   editCompany, deleteCompany } = require("./controllers/companyController");
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 const {validateCreate, validateGetById} = require("./validators/companyRoutes")
 
 router
-  .get("/all", getAllCompanies) // La protección de ruta con el chequeo del rol de "admin" está aquí solo para probar que funcione.
-                                                                        // Debe borrarse lueego y proteger las rutas adecuadamente segun los roles que les correspondan
+.get('/all', validateToken, checkRole(['superAdmin']), getAllCompanies)
+  .get(
+    '/find-company/:id',
+    validateToken,
+    checkRole(['superAdmin', 'admin']),
+    getCompanyById
+  )
+  .post(
+    '/create-company',
+    validateToken,
+    checkRole(['superAdmin']),
+    createCompany
+  )
 
-  .get("/find-company/:id", validateGetById, getCompanyById)
+  .put(
+    '/edit-company/:id',
+    validateToken,
+    checkRole(['superAdmin']),
+    editCompany
+  ) 
 
-  .post("/create-company",  validateCreate, createCompany);
+  .delete(
+    '/delete-company/:id',
+    validateToken,
+    checkRole(['superAdmin']),
+    deleteCompany 
+  )
 
-module.exports = router;
+
+module.exports = router

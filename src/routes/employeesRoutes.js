@@ -11,35 +11,35 @@ const { validateToken, checkRole } = require('./controllers/jwtAuth')
 const { validateCreate, validateEdit} = require('./validators/employeeRoutes')
 
 router
-  .post(
-    '/create-employee/:companyId/:departmentId',
-    validateToken,
-    checkRole(['admin', 'user']),
-    validateCreate,
-    createEmployee
-  )
-  .get(
-    '/all-company/:companyId',
-    validateToken,
-    checkRole(['admin', 'user']),
-    allEmployeesOfCompany
-  )
-  .get(
-    '/find-employee/:id',
-    validateToken,
-    checkRole(['admin', 'user']),
-    getEmployeeById
-  )
-  .put(
-    '/edit-employee/:id',
-    validateToken,
-    checkRole(['admin', 'user']),
-    editEmployee
-  )
-  .delete(
-    '/delete-employee/:id',
-    validateToken,
-    checkRole(['admin', 'user']),
-    deleteEmployee
-  )
+.post(
+  '/create-employee/:companyId/:departmentId',
+  validateToken,
+  checkRole(['admin', 'user']),
+  validateCreate,
+  createEmployee
+)
+.get(
+  '/all-company/:companyId',
+  validateToken,
+  checkRole(['admin', 'user']),
+  allEmployeesOfCompany
+)
+.get(
+  '/find-employee/:id',
+  validateToken,
+  checkRole(['admin', 'user']),
+  getEmployeeById
+)
+.put(
+  '/edit-employee/:id',
+  validateToken,
+  checkRole(['admin', 'user']),
+  editEmployee
+)
+.delete(
+  '/delete-employee/:id',
+  validateToken,
+  checkRole(['admin', 'user']),
+  deleteEmployee
+)
 module.exports = router

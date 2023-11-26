@@ -6,8 +6,8 @@ const getAllDepartments = async (req, res) => {
   try {
     const departments = await prisma.department.findMany({
       where: {
-        companyId: req.params.id,
-      },
+        companyId: req.params.id
+      }
     })
     res.status(200).json({ departments: departments })
   } catch (error) {
@@ -19,16 +19,19 @@ const getAllDepartments = async (req, res) => {
 const createDepartment = async (req, res) => { 
   try {
     const { name, companyId } = req.body; 
+    
     const newApartment = await prisma.department.create({
-        data: {
-            name,
-            companyId,
-        },
-    });
-    res.status(200).json({ newApartment: newApartment });
+      data: {
+          name,
+          companyId,
+      },
+  });
+  res.status(200).json({ newApartment: newApartment });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Se ha producido un error al crear el departamento ');
+    res.status(500).json({
+      error:
+        'Se ha producido un error al crear el departamento, ' + error.message,
+    })
   }
 };
 const editDepartment = async (req, res) => {
@@ -39,23 +42,21 @@ const editDepartment = async (req, res) => {
       const validateNameDepartment = await tx.department.findMany({
         where: {
           name: req.body.name,
-          companyId: req.body.companyId,
-        },
+          companyId: req.body.companyId
+        }
       })
       if (!validateNameDepartment[0]) {
         const department = await tx.department.update({
           where: {
             id: req.params.id,
-            companyId: req.params.companyId,
+            companyId: req.params.companyId
           },
           data: {
             name: req.body.name,
-            companyId: req.body.companyId,
-          },
+            companyId: req.body.companyId
+          }
         })
-        res
-          .status(200)
-          .json({ message: 'Se ha actualizado el departamento exitosamente' })
+        res.status(200).json({ department: department })
       } else {
         throw new Error('Ya existe un departamento con ese nombre')
       }
@@ -64,7 +65,7 @@ const editDepartment = async (req, res) => {
     res.status(500).json({
       error:
         'Se ha producido un error al actualizar el departamento, ' +
-        error.message,
+        error.message
     })
   }
 }
@@ -74,8 +75,8 @@ const deleteDepartment = async (req, res) => {
     const department = await prisma.department.delete({
       where: {
         companyId: req.params.companyId,
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     })
     res
       .status(200)
@@ -92,5 +93,5 @@ module.exports = {
   getAllDepartments,
   createDepartment,
   editDepartment,
-  deleteDepartment,
+  deleteDepartment
 }
