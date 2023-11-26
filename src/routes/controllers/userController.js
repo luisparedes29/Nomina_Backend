@@ -194,10 +194,30 @@ const deleteUser = async (req, res) => {
   }
 }
 
+const getUserById = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.params.id
+      }
+    })
+    if (!user) {
+      throw new Error('El usuario no existe')
+    }
+    res.status(200).json({ user: user })
+  } catch (error) {
+    res.status(500).json({
+      error:
+        'Se ha producido un error al intentar obtener el usuario' +
+        error.message
+    })
+  }
+}
 module.exports = {
   registerUser,
   loginUser,
   getAllUsersOfCompany,
   editUser,
-  deleteUser
+  deleteUser,
+  getUserById
 }

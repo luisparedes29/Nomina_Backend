@@ -6,6 +6,7 @@ const {
   loginUser,
   editUser,
   deleteUser,
+  getUserById
 } = require('./controllers/userController')
 const { validateToken, checkRole } = require('./controllers/jwtAuth')
 
@@ -16,6 +17,7 @@ router
     checkRole(['admin', 'superAdmin']),
     getAllUsersOfCompany
   )
+  .get('/:id', validateToken, checkRole(['admin', 'superAdmin']), getUserById)
   .post(
     '/signup/:id',
     validateToken,
