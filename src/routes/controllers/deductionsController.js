@@ -59,6 +59,11 @@ const editDeduction = async (req, res) => {
       return res
         .status(400)
         .json({ error: 'El monto se recibió en un formato que no es valido' })
+    } else if (amount && amount < 0 || amount > 100) {
+      // El monto se recibe en porcentaje, por lo cual no puede exceder el 100%.
+      return res
+      .status(400)
+      .json({ error: 'El debe ser un numero comprendido entre el 0 y el 100%' })
     }
 
     const deductionToUpdate = {
