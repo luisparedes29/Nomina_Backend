@@ -22,17 +22,9 @@ const validateToken = async (req, res, next) => {
 
 // Middleware para verificar roles dinámicos
 const checkRole = (requiredRole) => (req, res, next) => {
-    // * Roles: super-admin | admin | user *
+    // requiredRole: string['super-admin' | 'admin' | 'user']
     if (!req.user) return res.status(400).send('No se encontrararon los datos del usuario logueado.')
-    const role = req.user.data.role
-    const isSuperAdmin = role === "super-admin"
-    const isAdmin = role === "admin"
-    if (
-        // *El "Super admin" puede hacer todo, el admin puede continuar si el rol no es "Super admin", y el usuario puede continuar solo si se requiere ese rol*
-        role === requiredRole ||
-        (isSuperAdmin ||
-        (role !== "super-admin" && isAdmin))
-    ) {
+    if (req.user && requiredRole.includes(req.user.data.role)) {
         next(); // El rol coincide, permite el acceso.
     } else {
         res.status(403).send('No tienes permiso para acceder a esta ruta.');

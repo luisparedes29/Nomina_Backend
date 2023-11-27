@@ -13,31 +13,31 @@ router
   .post(
   '/create-employee/:companyId/:departmentId',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     createEmployee
   )
   .get(
   '/all-company/:companyId',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     allEmployeesOfCompany
   )
   .get(
   '/find-employee/:id',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     getEmployeeById
   )
   .put(
   '/edit-employee/:id',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     editEmployee
   )
   .delete(
   '/delete-employee/:id',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     deleteEmployee
   )
 module.exports = router

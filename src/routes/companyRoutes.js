@@ -7,19 +7,19 @@ router
   .get(
     "/all",
     validateToken,
-    checkRole("super-admin"),
+    checkRole(["super-admin"]),
     getAllCompanies,
   )
   .get(
     "/find-company/:id",
     validateToken,
-    checkRole("admin"),
+    checkRole(["super-admin", "admin"]),
     getCompanyById
   )
   .post(
     "/create-company",
     validateToken,
-    checkRole("super-admin"),
+    checkRole(["super-admin"]),
     createCompany
   );
 

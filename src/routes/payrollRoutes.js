@@ -1,29 +1,22 @@
 const express = require('express')
 const router = express.Router()
 const {
-  createPayroll,
-  getAll,
+  generatePayroll,
   getOne,
 } = require('./controllers/payrollControllers')
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
-  .post(
-    '/create-payroll/:companyId/:departmentId',
-    validateToken,
-    checkRole("user"),
-    createPayroll
-   )
   .get(
-    '/all',
+    '/generate-payroll/:companyId/:departmentId',
     validateToken,
-    checkRole("user"),
-    getAll
-   )
+    checkRole(["admin", "user"]),
+    generatePayroll
+  )
   .get(
     '/:_id',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     getOne
-   )
+  )
 module.exports = router

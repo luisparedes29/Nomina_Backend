@@ -7,25 +7,25 @@ router
   .get(
     '/find-deductions/user/:companyId/:employeeId',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     getDeductionsByEmployee,
   )
   .put(
     '/edit-deduction/:id',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     editDeduction
    )
   .post(
     '/create-deduction/:companyId/:payrollId/:employeeId',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     createDeduction
   )
   .delete(
     '/delete-deduction/:deductionId/:employeeId',
     validateToken,
-    checkRole("user"),
+    checkRole(["admin", "user"]),
     deleteDeduction
   )
 
