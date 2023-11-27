@@ -4,6 +4,12 @@ const { getPerceptionByEmployee, createPerception, editPerception, deleteOne } =
 const {validateToken, checkRole} = require("./controllers/jwtAuth");
 
 router
+  .get(
+    '/find-perceptions/user/:id',
+    validateToken,
+    checkRole(["admin", "user"],
+    getPerceptionByEmployee,
+  )
   .post(
     '/create-perception/:companyId/:payrollId/:employeeId',
     validateToken,
@@ -21,12 +27,6 @@ router
     validateToken,
     checkRole(["admin", "user"]),
     deleteOne,
-  )
-  .get(
-    '/find-perceptions/user/:id',
-    validateToken,
-    checkRole(["admin", "user"],
-    getPerceptionByEmployee,
   )
 
 module.exports = router

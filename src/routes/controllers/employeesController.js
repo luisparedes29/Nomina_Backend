@@ -19,6 +19,7 @@ const createEmployee = async (req, res) => {
       charge,
       baseSalary,
       identityCard,
+      bankAccount,
     } = req.body
     if (
       !name ||
@@ -32,6 +33,7 @@ const createEmployee = async (req, res) => {
       !civilStatus ||
       !startDate ||
       !charge ||
+      !bankAccount ||
       !baseSalary ||
       !departmentId ||
       !companyId
@@ -46,6 +48,10 @@ const createEmployee = async (req, res) => {
       return res
         .status(400)
         .json({ error: 'El correo electronico no es valido' })
+    }
+    const bankAccountRegex = /^\d{10,12}$/
+    if (!bankAccountRegex.test(bankAccount)) {
+      return res.status(400).json({ error: 'Cuenta invalida.' })
     }
     const existingEmployee = await prisma.employee.findUnique({
       where: {
@@ -70,6 +76,7 @@ const createEmployee = async (req, res) => {
         phone,
         email,
         civilStatus,
+        bankAccount,
         startDate: new Date(startDate),
         charge,
         baseSalary,
@@ -128,18 +135,12 @@ const getEmployeeById = async (req, res) => {
 
 const editEmployee = async (req, res) => {
   try {
-    const {
-      email,
-      phone,
-      birthdate,
-      startDate,
-      baseSalary,
-      identityCard
-    } = req.body
+    const { email, phone, birthdate, startDate, baseSalary, identityCard } =
+      req.body
     // *Validacion de empleado existente*
     const existingEmployee = await prisma.employee.findUnique({
       where: {
-        id: req.params.id
+        id: req.params.id,
       },
     })
 
@@ -147,16 +148,17 @@ const editEmployee = async (req, res) => {
       return res.status(400).json({ error: 'Empleado no encontrado' })
     }
 
-    if (baseSalary && typeof baseSalary !== "number") {
-      return res
-        .status(400)
-        .json({ error: 'El salario base se recibió en un formato que no es valido' })
+    if (baseSalary && typeof baseSalary !== 'number') {
+      return res.status(400).json({
+        error: 'El salario base se recibió en un formato que no es valido',
+      })
     }
 
-    if (identityCard && typeof identityCard !== "number") {
-      return res
-        .status(400)
-        .json({ error: 'El documento de identidad se recibió en un formato que no es valido' })
+    if (identityCard && typeof identityCard !== 'number') {
+      return res.status(400).json({
+        error:
+          'El documento de identidad se recibió en un formato que no es valido',
+      })
     }
 
     // *Validacion de campos*
@@ -177,15 +179,15 @@ const editEmployee = async (req, res) => {
 
     if (birthdate) employeeToUpdate['birthdate'] = new Date(birthdate)
     if (startDate) employeeToUpdate['startDate'] = new Date(startDate)
-    
-    await prisma.employee.update({
+
+    const employeeUpdate = await prisma.employee.update({
       where: {
         id: req.params.id,
       },
       data: employeeToUpdate,
     })
     res.status(200).json({
-      message: 'Se ha actualizado la información del empleado exitosamente',
+      employee: employeeUpdate,
     })
   } catch (error) {
     console.error(error.message)

@@ -19,14 +19,14 @@ router
   .post(
     '/create-deduction/:companyId/:payrollId/:employeeId',
     validateToken,
-    checkRole(["admin", "user"]),
+    checkRole(['admin', 'user']),
     createDeduction
   )
   .delete(
     '/delete-deduction/:deductionId/:employeeId',
     validateToken,
-    checkRole(["admin", "user"]),
+    checkRole(['admin', 'user']),
     deleteDeduction
   )
 
-module.exports = router;
+module.exports = router
