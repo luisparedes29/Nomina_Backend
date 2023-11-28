@@ -12,6 +12,7 @@ const createEmployee = async (req, res) => {
       startDate,
       birthdate,
       gender,
+      condition,
       email,
       phone,
       civilStatus,
@@ -19,7 +20,7 @@ const createEmployee = async (req, res) => {
       charge,
       baseSalary,
       identityCard,
-      bankAccount,
+      bankAccount
     } = req.body
     if (
       !name ||
@@ -29,6 +30,7 @@ const createEmployee = async (req, res) => {
       !gender ||
       !address ||
       !phone ||
+      !condition ||
       !email ||
       !civilStatus ||
       !startDate ||
@@ -40,7 +42,7 @@ const createEmployee = async (req, res) => {
     ) {
       return res.status(400).json({
         error:
-          'Es necesario rellenar todos los campos para poder avanzar con el registro',
+          'Es necesario rellenar todos los campos para poder avanzar con el registro'
       })
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -55,8 +57,8 @@ const createEmployee = async (req, res) => {
     }
     const existingEmployee = await prisma.employee.findUnique({
       where: {
-        email,
-      },
+        email
+      }
     })
 
     if (existingEmployee) {
@@ -73,6 +75,7 @@ const createEmployee = async (req, res) => {
         birthdate: new Date(birthdate),
         gender,
         address,
+        condition,
         phone,
         email,
         civilStatus,
@@ -81,14 +84,14 @@ const createEmployee = async (req, res) => {
         charge,
         baseSalary,
         departmentId,
-        companyId,
-      },
+        companyId
+      }
     })
     res.status(200).json({ newEmployee: newEmployee })
   } catch (error) {
     console.error('Error al crear empleado:', error)
     res.status(500).json({
-      error: 'Hubo un error al crear empleado.',
+      error: 'Hubo un error al crear empleado.'
     })
   }
 }
@@ -97,8 +100,8 @@ const allEmployeesOfCompany = async (req, res) => {
   try {
     const employees = await prisma.employee.findMany({
       where: {
-        companyId: req.params.companyId,
-      },
+        companyId: req.params.companyId
+      }
     })
     if (employees.length == 0) {
       return res
@@ -109,7 +112,7 @@ const allEmployeesOfCompany = async (req, res) => {
   } catch (error) {
     console.error('Error al encontrar empleados:', error)
     res.status(500).json({
-      error: 'Hubo un error al encontrar los empleados.',
+      error: 'Hubo un error al encontrar los empleados.'
     })
   }
 }
@@ -118,14 +121,14 @@ const getEmployeeById = async (req, res) => {
   try {
     const employee = await prisma.employee.findUnique({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     })
     if (!employee) {
       return res.status(404).json({ error: 'El empleado no existe' })
     }
     res.status(200).json({
-      employee: employee,
+      employee: employee
     })
   } catch (error) {
     console.error(error.message)
@@ -140,8 +143,8 @@ const editEmployee = async (req, res) => {
     // *Validacion de empleado existente*
     const existingEmployee = await prisma.employee.findUnique({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     })
 
     if (!existingEmployee) {
@@ -150,14 +153,14 @@ const editEmployee = async (req, res) => {
 
     if (baseSalary && typeof baseSalary !== 'number') {
       return res.status(400).json({
-        error: 'El salario base se recibió en un formato que no es valido',
+        error: 'El salario base se recibió en un formato que no es valido'
       })
     }
 
     if (identityCard && typeof identityCard !== 'number') {
       return res.status(400).json({
         error:
-          'El documento de identidad se recibió en un formato que no es valido',
+          'El documento de identidad se recibió en un formato que no es valido'
       })
     }
 
@@ -174,7 +177,7 @@ const editEmployee = async (req, res) => {
     }
 
     const employeeToUpdate = {
-      ...req.body,
+      ...req.body
     }
 
     if (birthdate) employeeToUpdate['birthdate'] = new Date(birthdate)
@@ -182,12 +185,12 @@ const editEmployee = async (req, res) => {
 
     const employeeUpdate = await prisma.employee.update({
       where: {
-        id: req.params.id,
+        id: req.params.id
       },
-      data: employeeToUpdate,
+      data: employeeToUpdate
     })
     res.status(200).json({
-      employee: employeeUpdate,
+      employee: employeeUpdate
     })
   } catch (error) {
     console.error(error.message)
@@ -203,8 +206,8 @@ const deleteEmployee = async (req, res) => {
   try {
     const employee = await prisma.employee.delete({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     })
     res.status(200).json({ message: 'Se ha borrado al empleado exitosamente' })
   } catch (error) {
@@ -220,5 +223,5 @@ module.exports = {
   allEmployeesOfCompany,
   getEmployeeById,
   editEmployee,
-  deleteEmployee,
+  deleteEmployee
 }

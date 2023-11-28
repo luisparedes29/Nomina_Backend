@@ -90,6 +90,7 @@ model Employee {
   identityCard    Int
   birthdate       DateTime
   gender          String
+  condition       String
   address         String
   phone           String
   email           String            @unique
