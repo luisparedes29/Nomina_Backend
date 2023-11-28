@@ -2,17 +2,24 @@ const express = require("express");
 const router = express.Router();
 const {
   getAll,
-  createPerception,
+  createPerceptionName,
   deleteOne,
+  createPerceptionData,
 } = require("./controllers/perceptionsController");
 const { validateToken, checkRole } = require("./controllers/jwtAuth");
 
 router
   .post(
-    "/create-perception",
+    "/create-perception-name",
     validateToken,
     checkRole(["admin", "user"]),
-    createPerception
+    createPerceptionName
+  )
+  .post(
+    "/create-perception-data/:employeeId/:perceptionId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    createPerceptionData
   )
   .get(
     "/all/:employeeId",
@@ -21,7 +28,7 @@ router
     getAll
   )
   .delete(
-    "/delete-perception/:_id",
+    "/delete-perception/:perceptionDataId",
     validateToken,
     checkRole(["admin", "user"]),
     deleteOne
