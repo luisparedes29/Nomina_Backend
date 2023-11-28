@@ -99,8 +99,6 @@ const createPerceptionData = async (req, res) => {
       }
     })
 
-    console.log('existingPerceptionData', existingPerceptionData)
-
     if (existingPerceptionData) {
       return res.status(400).json({ message: 'El empleado ya tiene una percepción con el mismo nombre' })
     }
