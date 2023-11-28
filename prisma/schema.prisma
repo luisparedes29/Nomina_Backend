@@ -22,7 +22,6 @@ model Company {
   Payroll          Payroll[]
   Payroll_Employee payrollEmployee[]
   Receipt          Receipt[]
-  Deductions       Deductions[]
   Department       Department[]
   Employee         Employee[]
 }
@@ -81,7 +80,6 @@ model Payroll {
   companyName      Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId        String
   Payroll_Employee payrollEmployee[]
-  Deductions       Deductions[]
   Periodicity      Periodicity[]
 }
 
@@ -106,8 +104,8 @@ model Employee {
   companyId       String
   payrollEmployee payrollEmployee[]
   Receipt         Receipt[]
-  Deductions      Deductions[]
   perceptionData  perceptionData[]
+  deductionsData  deductionsData[]
 }
 
 model payrollEmployee {
@@ -151,14 +149,18 @@ model Receipt {
 }
 
 model Deductions {
-  id             String   @id @default(uuid())
+  id             String           @id @default(uuid())
   name           String
-  amount         Float
-  taxInformation String
-  payrollName    Payroll  @relation(fields: [payrollId], references: [id])
-  payrollId      String
-  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId      String
-  employeeName   Employee @relation(fields: [employeeId], references: [id])
-  employeeId     String
+  deductionsData deductionsData[]
+}
+
+model deductionsData {
+  id            String     @id @default(uuid())
+  employeeName  Employee   @relation(fields: [employeeId], references: [id])
+  employeeId    String
+  percentage    Float
+  application   String
+  state         String
+  deductionName Deductions @relation(fields: [deductionId], references: [id])
+  deductionId   String
 }
