@@ -11,17 +11,16 @@ datasource db {
 }
 
 model Company {
-  id   String @id @default(uuid())
-  name String
-  type String
+  id       String @id @default(uuid())
+  name     String
+  type     String
   currency String
-  country String
+  country  String
 
   User             User[]
   Setting          Setting[]
   Payroll          Payroll[]
   Payroll_Employee payrollEmployee[]
-  Perception       Perception[]
   Receipt          Receipt[]
   Deductions       Deductions[]
   Department       Department[]
@@ -82,7 +81,6 @@ model Payroll {
   companyName      Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId        String
   Payroll_Employee payrollEmployee[]
-  Perception       Perception[]
   Deductions       Deductions[]
   Periodicity      Periodicity[]
 }
@@ -97,7 +95,7 @@ model Employee {
   address         String
   phone           String
   email           String            @unique
-  bankAccount          String
+  bankAccount     String
   civilStatus     String
   startDate       DateTime
   charge          String
@@ -108,8 +106,8 @@ model Employee {
   companyId       String
   payrollEmployee payrollEmployee[]
   Receipt         Receipt[]
-  Perception      Perception[]
   Deductions      Deductions[]
+  perceptionData  perceptionData[]
 }
 
 model payrollEmployee {
@@ -123,16 +121,20 @@ model payrollEmployee {
 }
 
 model Perception {
-  id             String   @id @default(uuid())
+  id             String           @id @default(uuid())
   name           String
-  amount         Float
-  taxInformation String
-  payrollName    Payroll  @relation(fields: [payrollId], references: [id])
-  payrollId      String
-  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId      String
-  Employee_name  Employee @relation(fields: [employeeId], references: [id])
+  perceptionData perceptionData[]
+}
+
+model perceptionData {
+  id             String     @id @default(uuid())
+  employeeName   Employee   @relation(fields: [employeeId], references: [id])
   employeeId     String
+  amount         Float
+  application    String
+  state          String
+  perceptionName Perception @relation(fields: [perceptionId], references: [id])
+  perceptionId   String
 }
 
 model Receipt {
