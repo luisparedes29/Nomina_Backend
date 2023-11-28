@@ -1,25 +1,30 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const {
   getAll,
   createPerception,
   deleteOne,
-} = require('./controllers/perceptionsController')
-const { validateToken, checkRole } = require('./controllers/jwtAuth')
+} = require("./controllers/perceptionsController");
+const { validateToken, checkRole } = require("./controllers/jwtAuth");
 
 router
   .post(
-    '/create-perception',
+    "/create-perception",
     validateToken,
-    checkRole(['admin', 'user']),
+    checkRole(["admin", "user"]),
     createPerception
   )
-  .get('/all', validateToken, checkRole(['admin', 'user']), getAll)
-  .delete(
-    '/delete-perception/:_id',
+  .get(
+    "/all/:employeeId",
     validateToken,
-    checkRole(['admin', 'user']),
-    deleteOne
+    checkRole(["admin", "user"]),
+    getAll
   )
+  .delete(
+    "/delete-perception/:_id",
+    validateToken,
+    checkRole(["admin", "user"]),
+    deleteOne
+  );
 
-module.exports = router
+module.exports = router;
