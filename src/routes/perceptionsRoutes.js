@@ -1,25 +1,51 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const {
   getAll,
-  createPerception,
+  createPerceptionName,
+  createPerceptionData,
+  editPerceptionName,
+  editPerceptionData,
   deleteOne,
-} = require('./controllers/perceptionsController')
-const { validateToken, checkRole } = require('./controllers/jwtAuth')
+} = require("./controllers/perceptionsController");
+const { validateToken, checkRole } = require("./controllers/jwtAuth");
 
 router
   .post(
-    '/create-perception',
+    "/create-perception-name",
     validateToken,
-    checkRole(['admin', 'user']),
-    createPerception
+    checkRole(["admin", "user"]),
+    createPerceptionName
   )
-  .get('/all', validateToken, checkRole(['admin', 'user']), getAll)
+  .post(
+    "/edit-perception-name/:perceptionId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    editPerceptionName
+  )
+  .post(
+    "/edit-perception-data/:employeeId/:perceptionDataId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    editPerceptionData
+  )
+  .post(
+    "/create-perception-data/:employeeId/:perceptionId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    createPerceptionData
+  )
+  .get(
+    "/all/:employeeId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    getAll
+  )
   .delete(
-    '/delete-perception/:_id',
+    "/delete-perception/:perceptionDataId",
     validateToken,
-    checkRole(['admin', 'user']),
+    checkRole(["admin", "user"]),
     deleteOne
-  )
+  );
 
-module.exports = router
+module.exports = router;
