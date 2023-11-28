@@ -3,8 +3,10 @@ const router = express.Router();
 const {
   getAll,
   createPerceptionName,
-  deleteOne,
   createPerceptionData,
+  editPerceptionName,
+  editPerceptionData,
+  deleteOne,
 } = require("./controllers/perceptionsController");
 const { validateToken, checkRole } = require("./controllers/jwtAuth");
 
@@ -14,6 +16,18 @@ router
     validateToken,
     checkRole(["admin", "user"]),
     createPerceptionName
+  )
+  .post(
+    "/edit-perception-name/:perceptionId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    editPerceptionName
+  )
+  .post(
+    "/edit-perception-data/:employeeId/:perceptionDataId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    editPerceptionData
   )
   .post(
     "/create-perception-data/:employeeId/:perceptionId",

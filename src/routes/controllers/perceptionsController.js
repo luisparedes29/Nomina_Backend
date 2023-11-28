@@ -69,6 +69,106 @@ const createPerceptionName = async (req, res) => {
   }
 };
 
+const editPerceptionName = async (req, res) => {
+  try {
+    // Obtener el nombre de la percepción desde el cuerpo de la petición
+    const { name } = req.body
+
+    const perceptionId = req.params.perceptionId
+
+    if (!perceptionId) {
+      return res.status(400).json({ message: 'el ID del nombre de la percepcion es requerido' })
+    }
+
+    // Validar que el nombre exista
+    if (!name) {
+      res.status(400).json({ message: 'El nombre de la percepción es requerido' })
+      return
+    }
+
+    // Buscar si existe la percepction
+    const existingPerceptionName = await prisma.perception.findFirst({
+      where: {
+        id: perceptionId,
+      }
+    })
+
+    if (!existingPerceptionName) {
+      return res.status(400).json({ message: 'La percepcion a editar no ha sido encontrada.' })
+    }
+
+    // Actualizar la percepction
+    const perceptionUpdated = await prisma.perception.update({
+      where: {
+        id: perceptionId,
+      },
+      data: {
+        name,
+      }
+    })
+
+    res.json(perceptionUpdated)
+  } catch (error) {
+    console.error("Error al actualizar el nombre de la percepción:", error);
+    res.status(500).json({
+      error: "Hubo un error al actualizar el nombre de la percepción.",
+    });
+  }
+};
+
+const editPerceptionData = async (req, res) => {
+  try {
+    const employeeId = req.params.employeeId
+    const perceptionDataId = req.params.perceptionDataId
+
+    const {
+      amount,
+    } = req.body
+
+    if (!employeeId || !perceptionDataId) {
+      return res.status(400).json({ message: 'Los ID del empleado y el ID de los datos de la percepcion son requeridos' })
+    }
+
+    if (amount && typeof amount !== "number") {
+      return res
+        .status(400)
+        .json({ error: "El monto se recibió en un formato que no es valido" });
+    }
+
+    // Buscar si existen los datos de la percepction
+    const existingPerceptionData = await prisma.perceptionData.findFirst({
+      where: {
+        id: perceptionDataId,
+        employeeId: employeeId,
+      }
+    })
+
+    if (!existingPerceptionData) {
+      return res.status(400).json({ message: 'La percepcion a editar no ha sido encontrada.' })
+    }
+
+    const perceptionToUpdate = {
+      ...req.body,
+    }
+
+    // Actualizar la percepction
+    const perceptionDataUpdated = await prisma.perceptionData.update({
+      where: {
+        id: perceptionDataId,
+        employeeId: employeeId,
+      },
+      data: perceptionToUpdate
+    })
+
+    res.json(perceptionDataUpdated)
+  } catch (error) {
+    console.error("Error al actualizar los datos de la percepción:", error);
+    res.status(500).json({
+      error: "Hubo un error al actualizar los datos de la percepción.",
+    });
+  }
+};
+
 const createPerceptionData = async (req, res) => {
   try {
     const employeeId = req.params.employeeId
@@ -150,4 +250,4 @@ const deleteOne = async (req, res) => {
   }
 };
 
-module.exports = { getAll, createPerceptionName, createPerceptionData, deleteOne };
+module.exports = { getAll, createPerceptionName, createPerceptionData, editPerceptionName, editPerceptionData, deleteOne };
