@@ -117,7 +117,6 @@ const employeeData1 = {
   baseSalary: 50000
 }
 
-// Llamada para crear la primera empresa
 
 // Datos para la segunda empresa
 const companyData2 = {
@@ -322,6 +321,5 @@ const employeeData2 = [
   // }
 ]
 
-// Llamada para crear la segunda empresa
 createCompany(companyData1, usersData1, departmentData1, employeeData1)
 createCompany(companyData2, usersData2, departmentData2, employeeData2)
