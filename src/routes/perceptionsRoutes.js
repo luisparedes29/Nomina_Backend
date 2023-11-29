@@ -7,6 +7,7 @@ const {
   editPerceptionName,
   editPerceptionData,
   deleteOne,
+  getAllPerceptionsName,
 } = require("./controllers/perceptionsController");
 const { validateToken, checkRole } = require("./controllers/jwtAuth");
 
@@ -23,7 +24,7 @@ router
     checkRole(["admin", "user"]),
     editPerceptionName
   )
-  .post(
+  .put(
     "/edit-perception-data/:employeeId/:perceptionDataId",
     validateToken,
     checkRole(["admin", "user"]),
@@ -41,8 +42,14 @@ router
     checkRole(["admin", "user"]),
     getAll
   )
+  .get(
+    "/all-perceptions-name",
+    validateToken,
+    checkRole(["admin", "user"]),
+    getAllPerceptionsName
+  )
   .delete(
-    "/delete-perception/:perceptionDataId",
+    "/delete-perception/:perceptionDataId/:employeeId",
     validateToken,
     checkRole(["admin", "user"]),
     deleteOne
