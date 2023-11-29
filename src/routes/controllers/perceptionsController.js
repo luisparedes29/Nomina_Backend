@@ -3,6 +3,22 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // * Obtener las percepciones por empleado *
+const getAllPerceptionsName = async (req, res) => {
+  try {
+    const perceptionsName = await prisma.perception.findMany({})
+
+    res.status(200).json({
+      perceptionsName,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({
+      error: "Hubo un error al momento de obtener las percepciones",
+    })
+  }
+};
+
+// * Obtener las percepciones por empleado *
 const getAll = async (req, res) => {
   try {
     const employeeId = req.params.employeeId;
@@ -42,6 +58,7 @@ const getAll = async (req, res) => {
   }
 };
 
+// Crear un nuevo nombre de Percepcion
 const createPerceptionName = async (req, res) => {
   try {
     // Obtener el nombre de la percepción desde el cuerpo de la petición
@@ -49,8 +66,17 @@ const createPerceptionName = async (req, res) => {
 
     // Validar que el nombre exista
     if (!name) {
-      res.status(400).json({ message: 'El nombre de la percepción es requerido' })
+      res.status(400).json({ error: 'El nombre de la percepción es requerido' })
       return
+    }
+
+    const existingPerception = await prisma.perception.findUnique({
+      where: { name }
+    })
+    if (existingPerception) {
+      return res
+        .status(400)
+        .json({ error: 'El nombre para esa percepcion ya existe' })
     }
 
     // Crear una nueva percepción 
@@ -60,7 +86,7 @@ const createPerceptionName = async (req, res) => {
       }
     })
 
-    res.json(perception)
+    res.status(200).json({perception})
   } catch (error) {
     console.error("Error al crear el nombre de la percepción:", error);
     res.status(500).json({
@@ -69,6 +95,7 @@ const createPerceptionName = async (req, res) => {
   }
 };
 
+// Creo que no será necesario 
 const editPerceptionName = async (req, res) => {
   try {
     // Obtener el nombre de la percepción desde el cuerpo de la petición
@@ -116,6 +143,7 @@ const editPerceptionName = async (req, res) => {
   }
 };
 
+// Edita solo los datos de una percepcion
 const editPerceptionData = async (req, res) => {
   try {
     const employeeId = req.params.employeeId
@@ -126,7 +154,7 @@ const editPerceptionData = async (req, res) => {
     } = req.body
 
     if (!employeeId || !perceptionDataId) {
-      return res.status(400).json({ message: 'Los ID del empleado y el ID de los datos de la percepcion son requeridos' })
+      return res.status(400).json({ error: 'Los ID del empleado y el ID de los datos de la percepcion son requeridos' })
     }
 
     if (amount && typeof amount !== "number") {
@@ -144,7 +172,7 @@ const editPerceptionData = async (req, res) => {
     })
 
     if (!existingPerceptionData) {
-      return res.status(400).json({ message: 'La percepcion a editar no ha sido encontrada.' })
+      return res.status(400).json({ error: 'La percepcion a editar no ha sido encontrada.' })
     }
 
     const perceptionToUpdate = {
@@ -157,10 +185,13 @@ const editPerceptionData = async (req, res) => {
         id: perceptionDataId,
         employeeId: employeeId,
       },
-      data: perceptionToUpdate
+      data: perceptionToUpdate,
+      include: {
+        perceptionName: true 
+      }
     })
 
-    res.json(perceptionDataUpdated)
+    res.status(200).json({ perceptionData: perceptionDataUpdated })
   } catch (error) {
     console.error("Error al actualizar los datos de la percepción:", error);
     res.status(500).json({
@@ -169,20 +200,21 @@ const editPerceptionData = async (req, res) => {
   }
 };
 
+// Crea los datos de una percepcion
 const createPerceptionData = async (req, res) => {
   try {
     const employeeId = req.params.employeeId
     const perceptionId = req.params.perceptionId
 
     if (!employeeId || !perceptionId) {
-      return res.status(400).json({ message: 'Los ID del empleado y el ID de la percepcion son requeridos' })
+      return res.status(400).json({ error: 'Los ID del empleado y el ID de la percepcion son requeridos' })
     }
 
     const { amount, application, state } = req.body
 
     // Validar que los datos no estén vacíos
     if (!amount || !application || !state) {
-      return res.status(400).json({ message: 'Todos los datos son requeridos' })
+      return res.status(400).json({ error: 'Todos los datos son requeridos' })
     }
 
     if (amount && typeof amount !== "number") {
@@ -200,7 +232,7 @@ const createPerceptionData = async (req, res) => {
     })
 
     if (existingPerceptionData) {
-      return res.status(400).json({ message: 'El empleado ya tiene una percepción con el mismo nombre' })
+      return res.status(400).json({ error: 'El empleado ya tiene una percepción con el mismo nombre' })
     }
 
     // Crear una nueva perceptionData y relacionarla con el empleado y la perceptionName
@@ -217,7 +249,7 @@ const createPerceptionData = async (req, res) => {
       }
     })
 
-    res.json(perceptionData)
+    res.status(200).json({ perceptionData })
   } catch (error) {
     console.error("Error al crear los datos de la percepcion:", error);
     res.status(500).json({
@@ -226,18 +258,23 @@ const createPerceptionData = async (req, res) => {
   }
 };
 
+// Elimina los datos de una percepcion
 const deleteOne = async (req, res) => {
   try {
-    const perceptionDataId = req.params.perceptionDataId
+    const { perceptionDataId, employeeId} = req.params
 
     if (!perceptionDataId) {
       return res.status(400).json({ message: 'el ID de los datos de la percepcion es requerido' })
+    }
+    if (!employeeId) {
+      return res.status(400).json({ message: 'el ID del empleado de la percepcion es requerido' })
     }
 
     // Eliminar la perceptionData con ese id
     await prisma.perceptionData.delete({
       where: {
-        id: perceptionDataId
+        id: perceptionDataId,
+        employeeId
       }
     })
   
@@ -250,4 +287,4 @@ const deleteOne = async (req, res) => {
   }
 };
 
-module.exports = { getAll, createPerceptionName, createPerceptionData, editPerceptionName, editPerceptionData, deleteOne };
+module.exports = { getAllPerceptionsName, getAll, createPerceptionName, createPerceptionData, editPerceptionName, editPerceptionData, deleteOne };
