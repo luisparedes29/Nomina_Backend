@@ -83,6 +83,7 @@ CREATE TABLE `Employee` (
     `identityCard` INTEGER NOT NULL,
     `birthdate` DATETIME(3) NOT NULL,
     `gender` VARCHAR(191) NOT NULL,
+    `condition` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
@@ -112,11 +113,19 @@ CREATE TABLE `payrollEmployee` (
 CREATE TABLE `Perception` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `amount` DOUBLE NOT NULL,
-    `taxInformation` VARCHAR(191) NOT NULL,
-    `payrollId` VARCHAR(191) NOT NULL,
-    `companyId` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `Perception_name_key`(`name`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `perceptionData` (
+    `id` VARCHAR(191) NOT NULL,
     `employeeId` VARCHAR(191) NOT NULL,
+    `amount` DOUBLE NOT NULL,
+    `application` VARCHAR(191) NOT NULL,
+    `state` VARCHAR(191) NOT NULL,
+    `perceptionId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -139,11 +148,19 @@ CREATE TABLE `Receipt` (
 CREATE TABLE `Deductions` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `amount` DOUBLE NOT NULL,
-    `taxInformation` VARCHAR(191) NOT NULL,
-    `payrollId` VARCHAR(191) NOT NULL,
-    `companyId` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `Deductions_name_key`(`name`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `deductionsData` (
+    `id` VARCHAR(191) NOT NULL,
     `employeeId` VARCHAR(191) NOT NULL,
+    `percentage` DOUBLE NOT NULL,
+    `application` VARCHAR(191) NOT NULL,
+    `state` VARCHAR(191) NOT NULL,
+    `deductionId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -179,13 +196,10 @@ ALTER TABLE `payrollEmployee` ADD CONSTRAINT `payrollEmployee_payrollId_fkey` FO
 ALTER TABLE `payrollEmployee` ADD CONSTRAINT `payrollEmployee_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Perception` ADD CONSTRAINT `Perception_payrollId_fkey` FOREIGN KEY (`payrollId`) REFERENCES `Payroll`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `perceptionData` ADD CONSTRAINT `perceptionData_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Perception` ADD CONSTRAINT `Perception_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Perception` ADD CONSTRAINT `Perception_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `perceptionData` ADD CONSTRAINT `perceptionData_perceptionId_fkey` FOREIGN KEY (`perceptionId`) REFERENCES `Perception`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Receipt` ADD CONSTRAINT `Receipt_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -194,10 +208,7 @@ ALTER TABLE `Receipt` ADD CONSTRAINT `Receipt_employeeId_fkey` FOREIGN KEY (`emp
 ALTER TABLE `Receipt` ADD CONSTRAINT `Receipt_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Deductions` ADD CONSTRAINT `Deductions_payrollId_fkey` FOREIGN KEY (`payrollId`) REFERENCES `Payroll`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `deductionsData` ADD CONSTRAINT `deductionsData_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Deductions` ADD CONSTRAINT `Deductions_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Deductions` ADD CONSTRAINT `Deductions_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `deductionsData` ADD CONSTRAINT `deductionsData_deductionId_fkey` FOREIGN KEY (`deductionId`) REFERENCES `Deductions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
