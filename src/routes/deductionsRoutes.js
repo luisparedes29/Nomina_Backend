@@ -1,25 +1,44 @@
 const express = require('express')
 const router = express.Router()
-const {
-  createDeduction,
-  deleteDeduction,
-  getAll,
-} = require('./controllers/deductionsController')
+const { getAllDeductionsName, getAll, createDeductionName, createDeductionData, editDeductionData, deleteOne } = require('./controllers/deductionsController')
 const { validateToken, checkRole } = require('./controllers/jwtAuth')
 
 router
-  .get('/all', validateToken, checkRole(['admin', 'user']), getAll)
   .post(
-    '/create-deduction',
+    "/create-deduction-name",
     validateToken,
-    checkRole(['admin', 'user']),
-    createDeduction
+    checkRole(["admin", "user"]),
+    createDeductionName
+  )
+  .put(
+    "/edit-deduction-data/:employeeId/:deductionDataId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    editDeductionData
+  )
+  .post(
+    "/create-deduction-data/:employeeId/:deductionId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    createDeductionData
+  )
+  .get(
+    "/all/:employeeId",
+    validateToken,
+    checkRole(["admin", "user"]),
+    getAll
+  )
+  .get(
+    "/all-deductions-name",
+    validateToken,
+    checkRole(["admin", "user"]),
+    getAllDeductionsName
   )
   .delete(
-    '/delete-deduction',
+    "/delete-deduction/:deductionDataId/:employeeId",
     validateToken,
-    checkRole(['admin', 'user']),
-    deleteDeduction
-  )
+    checkRole(["admin", "user"]),
+    deleteOne
+  );
 
 module.exports = router

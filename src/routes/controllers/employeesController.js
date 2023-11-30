@@ -101,6 +101,9 @@ const allEmployeesOfCompany = async (req, res) => {
     const employees = await prisma.employee.findMany({
       where: {
         companyId: req.params.companyId
+      },
+      include: {
+        departmentName: true
       }
     })
     if (employees.length == 0) {
@@ -122,6 +125,9 @@ const getEmployeeById = async (req, res) => {
     const employee = await prisma.employee.findUnique({
       where: {
         id: req.params.id
+      },
+      include: {
+        departmentName: true
       }
     })
     if (!employee) {

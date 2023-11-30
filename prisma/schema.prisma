@@ -121,7 +121,7 @@ model payrollEmployee {
 
 model Perception {
   id             String           @id @default(uuid())
-  name           String
+  name           String           @unique
   perceptionData perceptionData[]
 }
 
@@ -151,7 +151,7 @@ model Receipt {
 
 model Deductions {
   id             String           @id @default(uuid())
-  name           String
+  name           String           @unique
   deductionsData deductionsData[]
 }
 
