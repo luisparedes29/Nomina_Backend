@@ -58,6 +58,9 @@ const createEmployee = async (req, res) => {
     const existingEmployee = await prisma.employee.findUnique({
       where: {
         email
+      },
+      include: {
+        departmentName: name
       }
     })
 
@@ -193,7 +196,10 @@ const editEmployee = async (req, res) => {
       where: {
         id: req.params.id
       },
-      data: employeeToUpdate
+      data: employeeToUpdate,
+      include: {
+        departmentName: true
+      }
     })
     res.status(200).json({
       employee: employeeUpdate
