@@ -17,13 +17,12 @@ model Company {
   currency String
   country  String
 
-  User             User[]
-  Setting          Setting[]
-  Payroll          Payroll[]
-  Payroll_Employee payrollEmployee[]
-  Receipt          Receipt[]
-  Department       Department[]
-  Employee         Employee[]
+  User       User[]
+  Setting    Setting[]
+  Payroll    Payroll[]
+  Receipt    Receipt[]
+  Department Department[]
+  Employee   Employee[]
 }
 
 model User {
@@ -68,7 +67,9 @@ model Periodicity {
 
 model Payroll {
   id               String            @id @default(uuid())
-  employee         String?
+  title            String
+  paymentPeriod    String
+  dateRange        String
   grossSalary      Float
   totalPerceptions Float
   totalDeductions  Float
@@ -77,6 +78,7 @@ model Payroll {
   state            String
   details          String
   voucher          String
+  createdAt        DateTime          @default(now())
   companyName      Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId        String
   Payroll_Employee payrollEmployee[]
@@ -110,13 +112,13 @@ model Employee {
 }
 
 model payrollEmployee {
-  id           String   @id @default(uuid())
-  employeeName Employee @relation(fields: [employeeId], references: [id])
-  employeeId   String
-  payrollName  Payroll  @relation(fields: [payrollId], references: [id])
-  payrollId    String
-  companyName  Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId    String
+  id               String   @id @default(uuid())
+  employeeName     Employee @relation(fields: [employeeId], references: [id])
+  employeeId       String
+  payrollName      Payroll  @relation(fields: [payrollId], references: [id])
+  payrollId        String
+  totalPerceptions Float
+  totalDeductions  Float
 }
 
 model Perception {
