@@ -45,6 +45,7 @@ const createCompany = async (req, res) => {
         if (!name || !type || !currency || !country) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
+        if (!req.file) return res.status(404).json({ messageError: 'Debes agregar una imagen del item' })
         const { path } = req.file;
         const existingCompany = await prisma.company.findFirst({
             where: { name },
