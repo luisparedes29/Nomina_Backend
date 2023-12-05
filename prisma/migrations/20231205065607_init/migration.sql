@@ -5,6 +5,7 @@ CREATE TABLE `Company` (
     `type` VARCHAR(191) NOT NULL,
     `currency` VARCHAR(191) NOT NULL,
     `country` VARCHAR(191) NOT NULL,
+    `logo` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -61,7 +62,9 @@ CREATE TABLE `Periodicity` (
 -- CreateTable
 CREATE TABLE `Payroll` (
     `id` VARCHAR(191) NOT NULL,
-    `employee` VARCHAR(191) NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `paymentPeriod` VARCHAR(191) NOT NULL,
+    `dateRange` VARCHAR(191) NOT NULL,
     `grossSalary` DOUBLE NOT NULL,
     `totalPerceptions` DOUBLE NOT NULL,
     `totalDeductions` DOUBLE NOT NULL,
@@ -70,6 +73,7 @@ CREATE TABLE `Payroll` (
     `state` VARCHAR(191) NOT NULL,
     `details` VARCHAR(191) NOT NULL,
     `voucher` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `companyId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -104,7 +108,8 @@ CREATE TABLE `payrollEmployee` (
     `id` VARCHAR(191) NOT NULL,
     `employeeId` VARCHAR(191) NOT NULL,
     `payrollId` VARCHAR(191) NOT NULL,
-    `companyId` VARCHAR(191) NOT NULL,
+    `totalPerceptions` DOUBLE NOT NULL,
+    `totalDeductions` DOUBLE NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -181,34 +186,31 @@ ALTER TABLE `Periodicity` ADD CONSTRAINT `Periodicity_payrollId_fkey` FOREIGN KE
 ALTER TABLE `Payroll` ADD CONSTRAINT `Payroll_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Employee` ADD CONSTRAINT `Employee_departmentId_fkey` FOREIGN KEY (`departmentId`) REFERENCES `Department`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Employee` ADD CONSTRAINT `Employee_departmentId_fkey` FOREIGN KEY (`departmentId`) REFERENCES `Department`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Employee` ADD CONSTRAINT `Employee_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `payrollEmployee` ADD CONSTRAINT `payrollEmployee_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `payrollEmployee` ADD CONSTRAINT `payrollEmployee_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `payrollEmployee` ADD CONSTRAINT `payrollEmployee_payrollId_fkey` FOREIGN KEY (`payrollId`) REFERENCES `Payroll`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `payrollEmployee` ADD CONSTRAINT `payrollEmployee_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `perceptionData` ADD CONSTRAINT `perceptionData_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `perceptionData` ADD CONSTRAINT `perceptionData_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `perceptionData` ADD CONSTRAINT `perceptionData_perceptionId_fkey` FOREIGN KEY (`perceptionId`) REFERENCES `Perception`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `perceptionData` ADD CONSTRAINT `perceptionData_perceptionId_fkey` FOREIGN KEY (`perceptionId`) REFERENCES `Perception`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Receipt` ADD CONSTRAINT `Receipt_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Receipt` ADD CONSTRAINT `Receipt_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Receipt` ADD CONSTRAINT `Receipt_companyId_fkey` FOREIGN KEY (`companyId`) REFERENCES `Company`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `deductionsData` ADD CONSTRAINT `deductionsData_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `deductionsData` ADD CONSTRAINT `deductionsData_employeeId_fkey` FOREIGN KEY (`employeeId`) REFERENCES `Employee`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `deductionsData` ADD CONSTRAINT `deductionsData_deductionId_fkey` FOREIGN KEY (`deductionId`) REFERENCES `Deductions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `deductionsData` ADD CONSTRAINT `deductionsData_deductionId_fkey` FOREIGN KEY (`deductionId`) REFERENCES `Deductions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -17,8 +17,8 @@ const perceptionsRouter = require('./routes/perceptionsRoutes')
 const departmentRouter = require('./routes/departmentRoutes')
 const { createSuperUser } = require('./helpers/superUsers')
 const { sendInitData } = require('./helpers/insertData')
-createSuperUser()
-sendInitData()
+// createSuperUser()
+// sendInitData()
 
 const app = express()
 
