@@ -1,0 +1,170 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id       String @id @default(uuid())
+  name     String
+  type     String
+  currency String
+  country  String
+  logo     String
+
+  User       User[]
+  Setting    Setting[]
+  Payroll    Payroll[]
+  Receipt    Receipt[]
+  Department Department[]
+  Employee   Employee[]
+}
+
+model User {
+  id          String  @id @default(uuid())
+  name        String
+  lastName    String
+  email       String  @unique
+  phone       String  @unique
+  address     String
+  password    String
+  role        String
+  companyName Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId   String
+}
+
+model Setting {
+  id          String  @id @default(uuid())
+  name        String
+  amount      Float
+  description String
+  companyName Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId   String
+}
+
+model Department {
+  id          String     @id @default(uuid())
+  name        String
+  companyName Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId   String
+  Employee    Employee[]
+}
+
+model Periodicity {
+  id            String   @id @default(uuid())
+  name          String
+  startDate     DateTime
+  endDate       DateTime
+  paymentMethod String
+  payrollName   Payroll  @relation(fields: [payrollId], references: [id])
+  payrollId     String
+}
+
+model Payroll {
+  id               String            @id @default(uuid())
+  title            String
+  paymentPeriod    String
+  dateRange        String
+  grossSalary      Float
+  totalPerceptions Float
+  totalDeductions  Float
+  netSalary        Float
+  taxInformation   String
+  state            String
+  details          String
+  voucher          String
+  createdAt        DateTime          @default(now())
+  companyName      Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId        String
+  Payroll_Employee payrollEmployee[]
+  Periodicity      Periodicity[]
+}
+
+model Employee {
+  id              String            @id @default(uuid())
+  name            String
+  lastName        String
+  identityCard    Int
+  birthdate       DateTime
+  gender          String
+  condition       String
+  address         String
+  phone           String
+  email           String            @unique
+  bankAccount     String
+  civilStatus     String
+  startDate       DateTime
+  charge          String
+  baseSalary      Float
+  departmentName  Department        @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  departmentId    String
+  companyName     Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId       String
+  payrollEmployee payrollEmployee[]
+  Receipt         Receipt[]
+  perceptionData  perceptionData[]
+  deductionsData  deductionsData[]
+}
+
+model payrollEmployee {
+  id               String   @id @default(uuid())
+  employeeName     Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId       String
+  payrollName      Payroll  @relation(fields: [payrollId], references: [id])
+  payrollId        String
+  totalPerceptions Float
+  totalDeductions  Float
+}
+
+model Perception {
+  id             String           @id @default(uuid())
+  name           String           @unique
+  perceptionData perceptionData[]
+}
+
+model perceptionData {
+  id             String     @id @default(uuid())
+  employeeName   Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId     String
+  amount         Float
+  application    String
+  state          String
+  perceptionName Perception @relation(fields: [perceptionId], references: [id], onDelete: Cascade)
+  perceptionId   String
+}
+
+model Receipt {
+  id             String   @id @default(uuid())
+  employeeName   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId     String
+  generationDate DateTime
+  perception     Float
+  deductions     Float
+  baseSalary     Float
+  amount         Float
+  companyName    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId      String
+}
+
+model Deductions {
+  id             String           @id @default(uuid())
+  name           String           @unique
+  deductionsData deductionsData[]
+}
+
+model deductionsData {
+  id            String     @id @default(uuid())
+  employeeName  Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId    String
+  percentage    Float
+  application   String
+  state         String
+  deductionName Deductions @relation(fields: [deductionId], references: [id], onDelete: Cascade)
+  deductionId   String
+}
