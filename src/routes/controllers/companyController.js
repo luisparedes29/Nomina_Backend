@@ -1,4 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
+const { deleteImage, uploadImageEvent } = require('../../helpers/cloudinary');
+var fs = require('fs-extra');
 
 const prisma = new PrismaClient();
 // use `prisma` in your application to read and write data in your DB
@@ -39,24 +41,34 @@ const getCompanyById = async (req, res) => {
 
 const createCompany = async (req, res) => {
     try {
-        const { name, type, currency, country } = req.body;
+        let { name, type, currency, country, logo } = req.body;
         if (!name || !type || !currency || !country) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
         }
+        const { path } = req.file;
         const existingCompany = await prisma.company.findFirst({
             where: { name },
         });
         if (existingCompany) {
             return res.status(400).json({ error: 'Empresa en existencia' });
         }
+        
+        console.log()
+        if (path) {
+            const result = await uploadImageEvent(path)
+            await fs.unlink(path)
+            logo = result.secure_url 
+        }
         const newCompany = await prisma.company.create({
             data: {
                 name,
                 type,
                 currency,
-                country
+                country,
+                logo
             },
         });
+        
         res.status(200).json({ newCompany: newCompany });
     } catch (error) {
         console.error('Error al crear empresa:', error);
@@ -68,7 +80,34 @@ const createCompany = async (req, res) => {
 
 const editCompany = async (req, res) => {
     try {
+        let path;
+        if (!!req.file) {
+            path = req.file.path;
+        }
         const data = req.body;
+        if (path !== undefined) {
+
+            const item = await prisma.company.findUnique({
+                where: {
+                    id: req.params.id,
+                },
+            });
+            console.log('1')
+            await deleteImage(item.logo)
+            console.log('2')
+
+            const result = await uploadImageEvent(path)
+            await fs.unlink(path)
+            data.logo = result.secure_url 
+            const company = await prisma.company.update({
+                where: {
+                    id: req.params.id,
+                },
+                data: data,
+            })
+
+            return res.status(200).json({ item: "The item has been edited" })
+        }
         const company = await prisma.company.update({
             where: {
                 id: req.params.id,

@@ -22,6 +22,9 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
+    "cloudinary": "^1.41.0",
+    "fs-extra": "^11.2.0",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
     "prisma": "^5.5.2"
   }
