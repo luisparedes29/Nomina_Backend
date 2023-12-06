@@ -55,25 +55,11 @@ model Department {
   Employee    Employee[]
 }
 
-model Periodicity {
-  id            String   @id @default(uuid())
-  name          String
-  startDate     DateTime
-  endDate       DateTime
-  paymentMethod String
-  payrollName   Payroll  @relation(fields: [payrollId], references: [id])
-  payrollId     String
-}
-
 model Payroll {
   id               String            @id @default(uuid())
   title            String
   paymentPeriod    String
   dateRange        String
-  grossSalary      Float
-  totalPerceptions Float
-  totalDeductions  Float
-  netSalary        Float
   taxInformation   String
   state            String
   details          String
@@ -82,7 +68,6 @@ model Payroll {
   companyName      Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId        String
   Payroll_Employee payrollEmployee[]
-  Periodicity      Periodicity[]
 }
 
 model Employee {
@@ -115,10 +100,12 @@ model payrollEmployee {
   id               String   @id @default(uuid())
   employeeName     Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   employeeId       String
-  payrollName      Payroll  @relation(fields: [payrollId], references: [id])
+  payrollName      Payroll  @relation(fields: [payrollId], references: [id], onDelete: Cascade)
   payrollId        String
   totalPerceptions Float
   totalDeductions  Float
+  grossSalary      Float
+  netSalary        Float
 }
 
 model Perception {
