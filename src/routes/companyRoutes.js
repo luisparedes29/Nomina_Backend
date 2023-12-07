@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const {upload} =require('./controllers/uploadController')
 const {
   getAllCompanies,
   createCompany,
@@ -10,7 +11,7 @@ const {
 const { validateToken, checkRole } = require('./controllers/jwtAuth')
 
 router
-  .get('/all', validateToken, checkRole(['superAdmin']), getAllCompanies)
+  .get('/all',  getAllCompanies)
   .get(
     '/find-company/:id',
     validateToken,
@@ -19,15 +20,14 @@ router
   )
   .post(
     '/create-company',
-    validateToken,
-    checkRole(['superAdmin']),
+    
+    upload.single('logo'),
     createCompany
   )
 
   .put(
     '/edit-company/:id',
-    validateToken,
-    checkRole(['superAdmin']),
+    upload.single('logo'),
     editCompany
   )
 
