@@ -16,31 +16,36 @@ const sendInitData = async () => {
           name: "TechCorp",
           type: "Tecnología",
           currency: "$",
-          country: "Estados Unidos"
+          country: "Estados Unidos",
+          logo: "https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png"
         },
         {
           name: "FinanzasGlobal",
           type: "Finanzas",
           currency: "DM",
-          country: "Alemania"
+          country: "Alemania",
+          logo: "https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png"
         },
         {
           name: "EcoSolutions",
           type: "Sostenibilidad",
           currency: "£",
-          country: "Reino Unido"
+          country: "Reino Unido",
+          logo: "https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png"
         },
         {
           name: "InnoTech",
           type: "Innovación",
           currency: "¥",
-          country: "Japón"
+          country: "Japón",
+          logo: "https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png"
         },
         {
           name: "HealthCare Ltd.",
           type: "Salud",
           currency: "$",
-          country: "Canadá"
+          country: "Canadá",
+          logo: "https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png"
         }
       ]
       // Insertar empresas y obtener los IDs

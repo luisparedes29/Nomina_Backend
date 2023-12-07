@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const upload = require('../middleware/multer')
 const {
   getAllCompanies,
   createCompany,
@@ -21,6 +22,7 @@ router
     '/create-company',
     validateToken,
     checkRole(['superAdmin']),
+    upload.single('logo'),
     createCompany
   )
 
