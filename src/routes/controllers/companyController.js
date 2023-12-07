@@ -1,5 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
-
+const cloudinary = require('../../utilities/cloudinary')
 const prisma = new PrismaClient();
 // use `prisma` in your application to read and write data in your DB
 
@@ -39,6 +39,18 @@ const getCompanyById = async (req, res) => {
 
 const createCompany = async (req, res) => {
     try {
+        if (!req.file) {
+            return res
+              .status(400)
+              .json({ error: 'No se proporcionó ningún archivo de imagen' })
+          }
+      
+          const result = await cloudinary.uploader.upload(req.file.path)
+          if (!result || !result.secure_url) {
+            return res.status(500).json({ error: 'Error al subir la imagen' })
+          }
+      
+          const imageUrl = result.secure_url
         const { name, type, currency, country } = req.body;
         if (!name || !type || !currency || !country) {
             return res.status(400).json({ error: 'Es necesario rellenar todos los campos para poder avanzar con el registro' });
@@ -54,7 +66,8 @@ const createCompany = async (req, res) => {
                 name,
                 type,
                 currency,
-                country
+                country,
+                logo: imageUrl
             },
         });
         res.status(200).json({ newCompany: newCompany });

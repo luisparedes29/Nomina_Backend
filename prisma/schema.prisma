@@ -16,6 +16,7 @@ model Company {
   type     String
   currency String
   country  String
+  logo String
 
   User       User[]
   Setting    Setting[]

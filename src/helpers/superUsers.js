@@ -29,7 +29,8 @@ const createSuperUser = async () => {
               name: 'superAdmin',
               type: 'superAdmin',
               currency: 'superAdmin',
-              country: 'superAdmin'
+              country: 'superAdmin',
+              logo : 'https://www.ideaelan.com/images/uploads/2016/11/super-admin-icon.jpg',	
             },
           },
         },
